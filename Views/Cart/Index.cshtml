@@ -1,0 +1,54 @@
+@model IEnumerable<CartDetail>
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>Mã sản phẩm</th>
+                <th>Mã tên sản phẩm</th>
+                <th>Ảnh</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+                <th>Công cụ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cart in Model)
+            {
+                <tr id="product__@cart.PK_iProductID">
+                    <td>@cart.PK_iProductID</td>
+                    <td>
+                        <input type="checkbox" name="" id="">
+                        @cart.sProductName
+                    </td>
+                    <td>
+                        <img width="100" src="~/img/@cart.sImageUrl" alt="">
+                    </td>
+                    <td>
+                        <div class="product__content-details-qnt-btn">
+                            <button type="button" class="product__content-details-sub-btn" onclick="tru(event, @cart.PK_iProductID, @cart.dUnitPrice)">-</button>
+                            <input name="qnt" type="text" id="qnt" value="@cart.iQuantity" class="product__content-details-qnt">
+                            <button type="button" class="product__content-details-add-btn" onclick="cong(event, @cart.PK_iProductID, @cart.dUnitPrice)">+</button>
+                        </div>
+                    </td>
+                    <td>@cart.dUnitPrice</td>
+                    <td id="money">@cart.dMoney</td>
+                    <td>
+                        <a href="javascript:deleteProduct(@cart.PK_iProductID)">Xoá</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="checkout">
+    <div class="checkcout-content">
+        <div class="checkout-check">
+            <input type="checkbox" onchange="checkout()" name="" id="">
+            <label for="">Chọn tất cả</label>
+        </div>
+        <div class="checkout-total-price">
+            Tổng thanh toán: <div class="money">10.000.000.00</div> VNĐ
+        </div>
+        <button class="btn btn-primary">Mua hàng</button>
+    </div>
+    </div>

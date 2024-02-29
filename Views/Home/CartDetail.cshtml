@@ -1,0 +1,33 @@
+<h1 class="display-4">Giỏ hàng của bạn</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã đơn hàng</th>
+            <th>Tên khách hàng</th>
+            <th>Tên sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Công cụ</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Công Đặng</td>
+            <td>Tai nghe blutoer</td>
+            <td>
+                <div class="product__content-details-qnt-btn">
+                    <button type="button" class="product__content-details-sub-btn" onclick="tru()">-</button>
+                    <input name="qnt" type="text" id="qnt" value="1" class="product__content-details-qnt">
+                    <button type="button" class="product__content-details-add-btn" onclick="cong()">+</button>
+                </div>
+            </td>
+            <td>
+                <a href="/Home/DetailOrder/">Xoá khỏi giỏ hàng</a>
+                <a href="/Home/DeleteOrder/">Cập nhật</a>
+                <a href="javascript:openEditModal()">Sửa</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div>Tổng tiền: 3 000 000 VNĐ</div>
+<a href="" class="btn btn-primary">Đặt hàng</a>

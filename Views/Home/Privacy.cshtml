@@ -1,0 +1,19 @@
+﻿@inject IHttpContextAccessor accesser
+
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <tr>
+        <td>ID:</td>
+        <td>@accesser?.HttpContext?.Session.GetInt32("StudentID")</td>
+    </tr>
+    <tr>
+        <td>Name:</td>
+        <td>@accesser?.HttpContext?.Session.GetString("StudentName")</td>
+    </tr>
+</table>
+
+<p>Use this page to detail your site's privacy policy.</p>

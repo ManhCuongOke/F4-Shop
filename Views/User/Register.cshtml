@@ -1,0 +1,40 @@
+@model User
+
+@{
+    ViewData["Title"] = "Register Page";
+}
+<div class="row">
+    <div class="col border border-2 rounded p-4">
+        <form asp-action="Register" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label asp-for="sName" class="form-label">Tên của bạn:</label>
+                <input type="text" asp-for="sName" id="" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label">Ảnh:</label>
+                <input type="file" name="file" id="" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label asp-for="sEmail" class="form-label">Email:</label>
+                <input type="text" asp-for="sEmail" id="" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label asp-for="sPassword" class="form-label">Mật khẩu:</label>
+                <input type="text" asp-for="sPassword" id="" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label">Nhập lại khẩu:</label>
+                <input type="text" name="" id="" class="form-control">
+            </div>
+            <div class="mb-3">
+                @if (ViewData["msg"] != null) {
+                    @ViewData["msg"]
+                }
+            </div>
+            <input type="submit" value="Đăng ký" class="btn btn-primary">
+        </form>
+    </div>
+    <div class="col">
+
+    </div>
+</div>

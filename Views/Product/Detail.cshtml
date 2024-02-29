@@ -1,0 +1,55 @@
+@model IEnumerable<Product>
+<div class="row">
+    <div class="col col-8">
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col col-6">
+                    <img class="cart-detail-img" src="~/img/@product.sImageUrl" alt="">
+                </div>
+                <div class="col col-6">
+                    <h2>@product.sProductName</h2>
+                    @product.sProductDescription
+                    <div class="product__content-details-qnt-btn">
+                        <button type="button" class="product__content-details-sub-btn" onclick="tru()">-</button>
+                        <input name="qnt" type="text" id="qnt" value="0" class="product__content-details-qnt">
+                        <button type="button" class="product__content-details-add-btn" onclick="cong()">+</button>
+                    </div>
+                    <button type="button" onclick="addToCart(@product.PK_iProductID)" class="btn btn-primary"> Thêm vào giỏ
+                        hàng <i class="fas fa-shopping-cart"></i></button>
+                    <a class="btn btn-primary" href="/Home/CartDetail">Mua ngay</a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col col-4">
+        Xem thêm
+    </div>
+</div>
+<div class="comment">
+    <h2>Bình luận(3)</h2>
+    <div class="row mt-4">
+        <div class="col-1">
+            <img src="~/img/no_user.jpg" class="comment-img" alt="">
+        </div>
+        <div class="col-11">
+            <input type="text" class="form-control" placeholder="Viết bình luận">
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-1">
+            <img src="~/img/no_user.jpg" class="comment-img" alt="">
+        </div>
+        <div class="col-11">
+            <div><b>Công Đặng</b></div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ex iste.
+                Nulla tempora quis voluptates aliquam illo totam laudantium, sapiente commodi, iure,
+                voluptatibus cumque molestiae praesentium laboriosam ipsum expedita veniam.</p>
+            <div>
+                <a href="">Thích</a>
+                <a href="">Phản hồi</a>
+                <span>2 tuần</span>
+            </div>
+        </div>
+    </div>
+</div>
