@@ -43,8 +43,6 @@ namespace Project.Controllers
 
         public IActionResult Privacy()
         {
-            _accessor?.HttpContext?.Session.SetString("StudentName", "Công");
-            _accessor?.HttpContext?.Session.SetInt32("StudentID", 1);
             return View();
         }
 
