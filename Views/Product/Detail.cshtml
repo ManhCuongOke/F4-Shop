@@ -11,11 +11,11 @@
                     <h2>@product.sProductName</h2>
                     @product.sProductDescription
                     <div class="product__content-details-qnt-btn">
-                        <button type="button" class="product__content-details-sub-btn" onclick="tru()">-</button>
+                        <button type="button" class="product__content-details-sub-btn" onclick="reduceProduct(event)">-</button>
                         <input name="qnt" type="text" id="qnt" value="0" class="product__content-details-qnt">
-                        <button type="button" class="product__content-details-add-btn" onclick="cong()">+</button>
+                        <button type="button" class="product__content-details-add-btn" onclick="increaseProduct(event)">+</button>
                     </div>
-                    <button type="button" onclick="addToCart(@product.PK_iProductID)" class="btn btn-primary"> Thêm vào giỏ
+                    <button type="button" onclick="addToCart(@product.PK_iProductID, @product.dPrice)" class="btn btn-primary"> Thêm vào giỏ
                         hàng <i class="fas fa-shopping-cart"></i></button>
                     <a class="btn btn-primary" href="/Home/CartDetail">Mua ngay</a>
                 </div>

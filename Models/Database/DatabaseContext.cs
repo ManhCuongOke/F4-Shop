@@ -17,7 +17,7 @@ namespace Project.Models
 
         public IEnumerable<Product> DisplayProducts (int categoryID) {
             SqlParameter categoryIDParam = new SqlParameter("@FK_iCategoryID", categoryID);
-            return this.Products.FromSqlRaw("EXEC sp_SelectProducts @FK_iCategoryID", categoryIDParam);
+            return this.Products.FromSqlRaw("EXEC sp_SelectProductsByCategoryID @FK_iCategoryID", categoryIDParam);
         }
 
         public IEnumerable<Product> DisplayProductsPagination (int pageSize, int pageNumber) {

@@ -33,19 +33,6 @@ window.onclick = (event) => {
     }
 }
 
-//AddToCart
-function addToCart(PK_iProductID) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('get', '/Cart/AddToCart/' + PK_iProductID + '', true);
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            const obj = JSON.parse(xhr.responseText);
-            alert(obj.msg);
-        }
-    }
-    xhr.send(null);
-}
-
 // load số lượng sản phẩm giỏ hàng
 function getCartInfo() {
     var xhr = new XMLHttpRequest();
@@ -123,6 +110,41 @@ function tru(event, productID, unitPrice) {
     }
 }
 
+// Tăng / Giảm số lượng sản phẩm trong chi tiết sản phẩm
+function increaseProduct(event) {
+    const parentElement = event.target.parentNode;
+    var increase = parentElement.querySelector("#qnt").value;
+    if (parseInt(increase) < 100) {
+        parentElement.querySelector("#qnt").value = parseInt(increase) + 1;
+    }
+}
+
+function reduceProduct(event) {
+    const parentElement = event.target.parentNode;
+    var reduce = parentElement.querySelector("#qnt").value;
+    if (parseInt(reduce) > 0) {
+        parentElement.querySelector("#qnt").value = parseInt(reduce) - 1;
+    }
+}
+
+//AddToCart
+function addToCart(productID, price) {
+    var quantity = document.getElementById("qnt").value;
+    if (parseInt(quantity) == 0) {
+        alert('Bạn chưa nhập số lượng sản phẩm!');
+    } else {
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', '/Cart/AddToCart/' + productID + '/' + price + '/' + quantity + '', true);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                const obj = JSON.parse(xhr.responseText);
+                alert(obj.msg);
+            }
+        }
+        xhr.send(null);
+    }
+}
+
 function deleteProduct(productID) {
     if (confirm("Bạn có chắc muốn xoá sản phẩm này khỏi giỏ hàng?")) {
         var formData = new FormData();
@@ -132,8 +154,8 @@ function deleteProduct(productID) {
         xhr.onreadystatechange = () => {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 const msg = JSON.parse(xhr.responseText);
-                alert(`${msg.msg}`);
                 document.getElementById("product__" + productID).style.display = 'none';
+                alert(`${msg.msg}`);
             } 
         };
         xhr.send(formData);
