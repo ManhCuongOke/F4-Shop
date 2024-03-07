@@ -1,0 +1,60 @@
+﻿:root {
+    --primary-color:#ee4d2d;
+    --white-color:#fff;
+    --black-color:#000;
+    --text-color:#333;
+    --border-color:#dbdbdb;
+    --star-gold-color:#ffce3e;
+    --navbar-height: 34px;
+    --header-height: 120px;
+    --header-with-search-height: calc(var(--header-height) - var(--navbar-height));
+    --header-sort-bar-height: 46px;
+    --normal-font-size: .938rem;
+    --h1-font-size: 1.5rem; 
+}
+
+* {
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%;
+    line-height: 1.6rem;
+    font-family: 'Roboto',sans-serif;
+    box-sizing: border-box;
+}
+
+/*Pagination*/
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+}
+
+.pagination-item {
+    margin: 0 12px;
+}
+
+.pagination-item__link {
+    display: block; /*Có mới đặt được chiều ngang*/
+    text-decoration: none;
+    font-size: 2rem;
+    color: #939393;
+    font-weight: 300;
+    min-width: 40px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 2px;
+}
+
+.pagination-item--active .pagination-item__link {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+    .pagination-item--active .pagination-item__link:hover {
+        background-color: #ed5c3f;
+    }
+

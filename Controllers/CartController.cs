@@ -25,9 +25,9 @@ public class CartController : Controller {
         return View(carts);
     }
 
-    [Route("/Cart/AddToCart/{productID?}")]
-    [HttpGet("/Cart/AddToCart/{productID?}")]
-    public IActionResult AddToCart(int productID)
+    [Route("/Cart/AddToCart/{productID?}/{unitPrice?}/{quantity?}")]
+    [HttpGet("/Cart/AddToCart/{productID?}/{unitPrice?}/{quantity?}")]
+    public IActionResult AddToCart(int productID, double unitPrice, int quantity)
     {
         var sessionUserID = _accessor?.HttpContext?.Session.GetInt32("UserID");
         SqlParameter userIDParam = new SqlParameter("@PK_iUserID", sessionUserID);
@@ -39,11 +39,29 @@ public class CartController : Controller {
         }
         else
         {
+            // https://www.c-sharpcorner.com/blogs/date-and-time-format-in-c-sharp-programming1
             // Thêm mã giỏ hàng
-            SqlParameter updateTimeParam = new SqlParameter("@dUpdateTime", DateTime.Now);
-            _context.Database.ExecuteSqlRaw("sp_InsertCart @dUpdateTime", updateTimeParam);
-            List<Cart> cart = _context.Carts.FromSqlRaw("").ToList();
-            return Json(new { productID });
+            SqlParameter updateTimeParam = new SqlParameter("@dUpdateTime", DateTime.Now.ToString("dd/MM/yyyy"));
+            List<Cart> cart = _context.Carts.FromSqlRaw("SET DATEFORMAT dmy EXEC sp_GetCartIDByTime @dUpdateTime", updateTimeParam).ToList();
+            int cartID;
+            if (cart != null) {
+                cartID = cart[0].PK_iCartID;
+                var updateTime = cart[0].dUpdateTime;
+            } else {
+                _context.Database.ExecuteSqlRaw("SET DATEFORMAT dmy EXEC sp_InsertCart @dUpdateTime", updateTimeParam);
+                List<Cart> newCart = _context.Carts.FromSqlRaw("SET DATEFORMAT dmy EXEC sp_GetCartIDByTime @dUpdateTime", updateTimeParam).ToList();
+                cartID = newCart[0].PK_iCartID;
+            }
+            // Thêm vào chi tiết giỏ hàng
+            SqlParameter productIDParam = new SqlParameter("@PK_iProductID", productID);
+            SqlParameter cartIDParam = new SqlParameter("@PK_iCartID", cartID);
+            SqlParameter quantityParam = new SqlParameter("@iQuantity", quantity);
+            SqlParameter unitPriceParam = new SqlParameter("@dUnitPrice", unitPrice);
+            SqlParameter discountParam = new SqlParameter("@dDiscount", 1);
+            SqlParameter moneyParam = new SqlParameter("@dMonney", unitPrice * quantity);
+            _context.Database.ExecuteSqlRaw("sp_InsertProductIntoCartDetail @PK_iUserID, @PK_iProductID, @PK_iCartID, @iQuantity, @dUnitPrice, @dDiscount, @dMonney", userIDParam, productIDParam, cartIDParam, quantityParam, unitPriceParam, discountParam, moneyParam);
+            string msg = "Thêm vào giỏ hàng thành công!";
+            return Json(new {msg});
         }
     }
 
