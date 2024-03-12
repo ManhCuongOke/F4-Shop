@@ -13,7 +13,10 @@ builder.Services.AddSession(opts => {
 });
 builder.Services.AddDistributedMemoryCache();
 
+// Regis Transient
 builder.Services.AddTransient<IHomeResponsitory, HomeResponsitory>();
+builder.Services.AddTransient<ICartReponsitoty, CartResponsitory>();
+builder.Services.AddTransient<IProductResponsitory, ProductResponsitory>();
 
 var app = builder.Build();
 

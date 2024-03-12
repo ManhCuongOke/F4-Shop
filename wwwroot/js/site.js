@@ -2,49 +2,71 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-const editModal = document.querySelector(".edit__modal");
+const loginModal = document.querySelector(".modal");
 
 
-function openEditModal(orderID) {
-    editModal.classList.add("active-modal");
-    // console.log(orderID);
-    // var formData = new FormData();
-    // formData.append("orderID", orderID);
-    // var xhr = new XMLHttpRequest();
-    // xhr.open('post', '/Home/EditOrder', true);
-    // xhr.onreadystatechange = () => {
-    //     if (xhr.readyState == 4 && xhr.status == 200) {
-    //         const data = JSON.parse(xhr.responseText);
-    //         data.map(obj => 
-    //             document.querySelector(".input-order-id").value = obj.pK_iOrderID
-    //             );
-    //     }
-    // }
-    // xhr.send(formData);
+function openLoginModal(orderID) {
+    loginModal.classList.add("open");
 }
 
-document.querySelector(".edit__modal-close").addEventListener("click", () => {
-    editModal.classList.remove("active-modal");
+document.querySelector(".auth-form__switch-btn").addEventListener("click", () => {
+    loginModal.classList.remove("open");
 });
 
 window.onclick = (event) => {
-    if (event.target == editModal) {
-        editModal.classList.remove("active-modal");
+    if (event.target == loginModal) {
+        loginModal.classList.remove("open");
+    }
+}
+
+// Tìm kiếm sản phẩm
+function searchProducts(input) {
+    document.querySelector('.header__search-history').style.display = 'block';
+    var formData = new FormData();
+    if (input.value != "") {
+        formData.append("keyword", input.value);
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open('post', '/Home/Search', true);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            const data = JSON.parse(xhr.responseText);
+            let html = "";
+            //html += "<div class='header__search-history'>";
+            //html +=     "<h3 class='header__search-history-heading'>Lịch sử tìm kiếm</h3>";
+            html +=     "<ul class='header__search-history-list'>";
+            html += data.map(obj => `
+                            <li class="header__search-history-item">
+                                <a href="/Product/Index?categoryID=${obj.pK_iCategoryID}">${obj.sCategoryName}</a>
+                            </li>`).join('');
+            html +=     "</ul>";
+            //html += "</div>";
+            document.querySelector('.header__search-history').innerHTML = html;
+        } 
+    };
+    xhr.send(formData);
+}
+const searchHistory = document.querySelector('.header__search-history');
+window.onclick = (event) => {
+    if (event.target == searchHistory) {
+        searchHistory.style.display = 'none';
     }
 }
 
 // load số lượng sản phẩm giỏ hàng
 function getCartInfo() {
     var xhr = new XMLHttpRequest();
-    xhr.open('post', '/Cart/Index', true);
+    xhr.open('post', '/Cart/GetCartInfo', true);
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
             const data = JSON.parse(xhr.responseText);
-            getCartCount(data);
+            // getCartCount(data);
         }
     }
     xhr.send(null);
 }
+
+//Lấy thông tin sản phẩm trong giỏ hàng
 
 function getCartCount(data) {
     let html = "";

@@ -109,13 +109,12 @@
                         @* <li id="" class="header__navbar-item header__navbar-item--strong js-login-form">Đăng nhập</li> *@
                         @if (@accesser?.HttpContext?.Session.GetString("UserName") == null)
                         {
-                            <li class="header__navbar-item header__navbar-item--strong js-login-form" onclick="openEditModal()">Đăng nhập</li>
+                            <li class="header__navbar-item header__navbar-item--strong js-login-form" onclick="openLoginModal()">Đăng nhập</li>
                         }
                         else
                         {
-                            @* <a class="nav-link text-dark" href="#">Xin chào <b>@accesser?.HttpContext?.Session.GetString("UserName")</b>!</a> *@
                             <li class="header__navbar-item header__navbar-user">
-                                @* <img src="/html/Image/AnhDaiDien.jpg" alt="" class="header__navbar-user-img"> *@
+                                <img src="~/img/no_user.jpg" alt="" class="header__navbar-user-img">
                                 <span class="header__navbar-user-name">@accesser?.HttpContext?.Session.GetString("UserName")</span>
                                 <ul class="header__navbar-user-menu">
                                     <li class="header__navbar-user-item">
@@ -163,18 +162,18 @@
 
                     <div class="header__search">
                         <div class="header__search-input-wrap">
-                            <input type="text" class="header__search-input" placeholder="Tìm kiếm">
+                            <input type="text" class="header__search-input" onkeyup="searchProducts(this)" placeholder="Tìm kiếm">
 
                             <!--Search history-->
                             <div class="header__search-history">
-                                <h3 class="header__search-history-heading">Lịch sử tìm kiếm</h3>
+                                @* <h3 class="header__search-history-heading">Lịch sử tìm kiếm</h3> *@
                                 <ul class="header__search-history-list">
-                                    <li class="header__search-history-item">
+                                    @* <li class="header__search-history-item">
                                         <a href="">Kem dưỡng da</a>
                                     </li>
                                     <li class="header__search-history-item">
                                         <a href="">Kem trị mụn</a>
-                                    </li>
+                                    </li> *@
                                 </ul>
                             </div>
                         </div>
@@ -208,109 +207,48 @@
                             {
                                 <span class="header__cart-notice">@accesser?.HttpContext?.Session.GetInt32("CartCount")</span>
                             }
-                            @* <span class="header__cart-notice">3</span> *@
                             <!--No cart: header__cart-list--no-cart-->
-                            <div class="header__cart-list ">
-                                <img src="/html/Image/no-cart.png" alt="" class="header__cart-no-cart-img">
-                                <span class="header__cart-list-no-cart-msg">
-                                    Chưa có sản phẩm
-                                </span>
-                                <h4 class="header__cart-heading">Sản phẩm đã thêm</h4>
-                                <ul class="header__cart-list-item">
-                                    <!--Cart item-->
-                                    <li class="header__cart-item">
-                                        <div class="header__cart-item-img">
-                                            <img src="/html/Image/MyPham4.jpg" class="header__cart-item-img" alt="">
-                                        </div>
-                                        <div class="header__cart-item-info">
-                                            <div class="header__cart-item-head">
-                                                <h5 class="header__cart-item-name">Bộ kem đặc trị mắt Bộ kem đặc trị mắt
-                                                    Bộ
-                                                    kem đặc trị mắt Bộ kem đặc trị mắt Bộ kem đặc trị mắt Bộ kem đặc trị
-                                                    mắt
-                                                    Bộ kem đặc trị mắt</h5>
-                                                <div class="header__cart-item-price-wrap">
-                                                    <span class="header__cart-item-price">2.000 000đ</span>
-                                                    <span class="header__cart-item-multifly">X</span>
-                                                    <span class="header__cart-item-qnt">2</span>
-                                                </div>
-                                            </div>
-                                            <div class="header__cart-item-body">
-                                                <span class="header__cart-item-description">
-                                                    Phân loại hàng:Bạc
-                                                </span>
-                                                <span class="header__cart-item-remove">Xoá</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="header__cart-item">
-                                        <div class="header__cart-item-img">
-                                            <img src="/html/Image/MyPham5.jpg" class="header__cart-item-img" alt="">
-                                        </div>
-                                        <div class="header__cart-item-info">
-                                            <div class="header__cart-item-head">
-                                                <h5 class="header__cart-item-name">Bộ kem đặc trị mắt</h5>
-                                                <div class="header__cart-item-price-wrap">
-                                                    <span class="header__cart-item-price">2.000 000đ</span>
-                                                    <span class="header__cart-item-multifly">X</span>
-                                                    <span class="header__cart-item-qnt">2</span>
-                                                </div>
-                                            </div>
-                                            <div class="header__cart-item-body">
-                                                <span class="header__cart-item-description">
-                                                    Phân loại hàng:Bạc
-                                                </span>
-                                                <span class="header__cart-item-remove">Xoá</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="header__cart-item">
-                                        <div class="header__cart-item-img">
-                                            <img src="/html/Image/MyPham6.jpg" class="header__cart-item-img" alt="">
-                                        </div>
-                                        <div class="header__cart-item-info">
-                                            <div class="header__cart-item-head">
-                                                <h5 class="header__cart-item-name">Bộ kem đặc trị mắt</h5>
-                                                <div class="header__cart-item-price-wrap">
-                                                    <span class="header__cart-item-price">2.000 000đ</span>
-                                                    <span class="header__cart-item-multifly">X</span>
-                                                    <span class="header__cart-item-qnt">2</span>
-                                                </div>
-                                            </div>
-                                            <div class="header__cart-item-body">
-                                                <span class="header__cart-item-description">
-                                                    Phân loại hàng:Bạc
-                                                </span>
-                                                <span class="header__cart-item-remove">Xoá</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="header__cart-item">
-                                        <div class="header__cart-item-img">
-                                            <img src="/html/Image/MyPham7.jpg" class="header__cart-item-img" alt="">
-                                        </div>
-                                        <div class="header__cart-item-info">
-                                            <div class="header__cart-item-head">
-                                                <h5 class="header__cart-item-name">Bộ kem đặc trị mắt</h5>
-                                                <div class="header__cart-item-price-wrap">
-                                                    <span class="header__cart-item-price">2.000 000đ</span>
-                                                    <span class="header__cart-item-multifly">X</span>
-                                                    <span class="header__cart-item-qnt">2</span>
-                                                </div>
-                                            </div>
-                                            <div class="header__cart-item-body">
-                                                <span class="header__cart-item-description">
-                                                    Phân loại hàng:Bạc
-                                                </span>
-                                                <span class="header__cart-view-cart header__cart-item-remove">Xoá</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="header__cart-btn">
-                                    <botton class="header__cart-btn-sub"> <a href="">Xem giỏ hàng</a></botton>
+                            @if (@accesser?.HttpContext?.Session.GetInt32("UserID") == null) {
+                                <div class="header__cart-list header__cart-list--no-cart">
+                                    <img src="~/img/no-cart.png" alt="" class="header__cart-no-cart-img">
+                                    <span class="header__cart-list-no-cart-msg">
+                                        Chưa có sản phẩm
+                                    </span>
                                 </div>
-                            </div>
+                            } else {
+                                <div class="header__cart-list ">
+                                    <h4 class="header__cart-heading">Sản phẩm đã thêm</h4>
+                                    <ul class="header__cart-list-item">
+                                        <!--Cart item-->
+                                        @foreach (var cart in Model.CartDetails) {
+                                            <li class="header__cart-item">
+                                                <div class="header__cart-item-img">
+                                                    <img src="~/img/@cart.sImageUrl" class="header__cart-item-img" alt="">
+                                                </div>
+                                                <div class="header__cart-item-info">
+                                                    <div class="header__cart-item-head">
+                                                        <h5 class="header__cart-item-name">@cart.sProductName</h5>
+                                                        <div class="header__cart-item-price-wrap">
+                                                            <span class="header__cart-item-price">@cart.dUnitPrice đ</span>
+                                                            <span class="header__cart-item-multifly">X</span>
+                                                            <span class="header__cart-item-qnt">@cart.iQuantity</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="header__cart-item-body">
+                                                        <span class="header__cart-item-description">
+                                                            Phân loại hàng:Bạc
+                                                        </span>
+                                                        <span class="header__cart-item-remove">Xoá</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                    <div class="header__cart-btn">
+                                        <botton class="header__cart-btn-sub"> <a href="">Xem giỏ hàng</a></botton>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -427,73 +365,62 @@
             </div>
         </footer>
     </div>
-    @* <header>
-        <div class="container">
-            <nav
-                class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">VanCong Shop</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                    asp-action="Index">Trang chủ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                    asp-action="Privacy">Liên hệ</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        @if (@accesser?.HttpContext?.Session.GetString("UserName") == null) {
-                            <a class="nav-link text-dark" href="javascript:openEditModal()">Đăng nhập</a>
-                        } else {
-                            <a class="nav-link text-dark" href="#">Xin chào <b>@accesser?.HttpContext?.Session.GetString("UserName")</b>!</a>
-                        }
-                    </div>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                    <div class="header__cart">
-                        <a href="/Cart/Index" class="header__cart-wrap">
-                            <i class="navbar__cart-icon fa-solid fa-cart-shopping"></i>
-                            @if (@accesser?.HttpContext?.Session.GetInt32("CartCount") == null) {
-                                <span class="navbar__cart-notice">0</span>
-                            } else {
-                                <span class="navbar__cart-notice">@accesser?.HttpContext?.Session.GetInt32("CartCount")</span>
-                            }
-                        </a>
-                    </div>
-                </div>
-            </nav>
+    <!--Modal layoyt-->
+    <div class="modal js-modal">
+        <div class="modal__overlay">
+
         </div>
-    </header> *@
-    @* <div class="edit__modal">
-        <form action="/User/Login" method="post" class="edit__modal-content">
-            <h1>Đăng nhập</h1>
-            <div class="mb-3">
-                <label class="form-label">Email:</label>
-                <input type="text" name="email" class="form-control input-customer-id">
+        <div class="modal__body">
+            <!--Register form-->
+
+            <!--Login form-->
+            <div class="auth-form">
+                <form action="/User/Login" method="post" class="auth-form__container">
+                    <div class="auth-form__header">
+                        <h3 class="auth-form__heading">Đăng nhập</h3>
+                        <span class="auth-form__switch-btn"><i class="fa-solid fa-xmark auth-form__close"></i></span>
+                    </div>
+                    <div class="auth-form__form">
+                        <div class="auth-form__group"> 
+                            <input type="text" name="email" id="" class="auth-form__input" placeholder="Email của bạn">
+                        </div>
+                        <div class="auth-form__group">
+                            <input type="password" name="password" id="" class="auth-form__input"
+                                placeholder="Mật khẩu của bạn">
+                        </div>
+                    </div>
+                    <div class="auth-form__aside">
+                        <div class="auth-form__help">
+                            <a href="" class="auth-form__help-link auth-form__help-link">Quên mật khẩu</a>
+                            <span class="auth-form__help-separate"></span>
+                            <a href="" class="auth-form__help-link">Cần trợ giúp</a>
+                        </div>
+                    </div>
+                    <div class="auth-form__controls">
+                        <button id="" class="btn auth-form__controls-back btn--normal js-login-form-close">TRỞ
+                            LẠI</button>
+                        <button type="submit" class="btn btn--primary">ĐĂNG NHẬP</button>
+                    </div>
+                </form>
+                <div class="auth-form__socials">
+                    <a href="" class="auth-form__socials--facebook btn btn--size-s btn--size-color btn--with-icon">
+                        <i class="auth-form__socials-icon fab fa-facebook-square"></i>
+                        <span class="auth-form__socials-title">
+                            Kết nối với Facebook
+                        </span>
+                    </a>
+                    <a href="" class="auth-form__socials--google btn btn--size-s btn--with-icon">
+                        <i class="auth-form__socials-icon fab fa-google"></i>
+                        <span class="auth-form__socials-title">
+                            Kết nối với Facebook
+                        </span>
+                    </a>
+                </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Mật khẩu:</label>
-                <input type="password" name="password" class="form-control input-order-date">
-            </div>
-            <div class="mb-3">
-                <button class="btn btn-danger edit__modal-close">Huỷ</button>
-                <button type="submit" class="btn btn-primary" href="">Đăng nhập</button>
-            </div>
-            <a href="/User/Register">Bạn chưa có tài khoản? Đăng ký</a>
-        </form>
-    </div> *@ 
-    
+
+        </div>
+
+    </div>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/main.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
