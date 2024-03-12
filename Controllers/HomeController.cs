@@ -11,34 +11,47 @@ namespace Project.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly DatabaseContext _context;
         private readonly IHttpContextAccessor _accessor;
+        private readonly IHomeResponsitory _homeResponsitory;
+        private readonly ICartReponsitoty _cartResponsitory;
 
-        public HomeController(ILogger<HomeController> logger, DatabaseContext context, IHttpContextAccessor accessor)
+        public HomeController(ILogger<HomeController> logger, DatabaseContext context, IHttpContextAccessor accessor, IHomeResponsitory homeResponsitory, ICartReponsitoty cartReponsitory)
         {
             _logger = logger;
             _context = context;
             _accessor = accessor;
+            _homeResponsitory = homeResponsitory;
+            _cartResponsitory = cartReponsitory;
         }
 
-        public IActionResult Index(int currentPage = 1, int categoryId = 1)
+        public IActionResult Index(int currentPage = 1)
         {
             // Fix cứng dữ liệu
-            _accessor?.HttpContext?.Session.SetString("UserName", "Công Đặng");
-            _accessor?.HttpContext?.Session.SetInt32("UserID", 1);
+            // _accessor?.HttpContext?.Session.SetString("UserName", "Công Đặng");
+            //_accessor?.HttpContext?.Session.SetInt32("UserID", 1);
+            var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
 
-            IEnumerable<Product> products = _context.DisplayProducts(categoryId).ToList();
+            IEnumerable<Product> products = _homeResponsitory.getProducts().ToList();
             int totalRecord = products.Count();
-            int pageSize = 3;
+            int pageSize = 6;
             int totalPage = (int) Math.Ceiling(totalRecord / (double) pageSize);
             products = products.Skip((currentPage - 1) * pageSize).Take(pageSize);
-            IEnumerable<Category> categories = _context.DisplayCategories().ToList();
+            IEnumerable<Category> categories = _homeResponsitory.getCategories().ToList();
+            IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)).ToList();
             ProductViewModel model = new ProductViewModel {
                 Products = products,
                 Categories = categories,
+                CartDetails = cartDetails,
                 TotalPage = totalPage,
                 PageSize = pageSize,
                 CurrentPage = currentPage
             };
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Search(string keyword = "") {
+            IEnumerable<Category> products = _homeResponsitory.searchProductsByKeyword(keyword).ToList();
+            return Ok(products);
         }
 
         public IActionResult Privacy()

@@ -6,23 +6,37 @@ using Project.Models;
 public class CartController : Controller {
     private readonly IHttpContextAccessor _accessor;
     private readonly DatabaseContext _context;
-    public CartController(IHttpContextAccessor accessor, DatabaseContext context)
+    private readonly ICartReponsitoty _cartResponsitory;
+    public CartController(IHttpContextAccessor accessor, DatabaseContext context, ICartReponsitoty cartReponsitoty)
     {
         _accessor = accessor;
         _context = context;
+        _cartResponsitory = cartReponsitoty;
     }
 
     public IActionResult Index() {
         // Fix cứng dữ liệu
         _accessor?.HttpContext?.Session.SetInt32("UserID", 1);
 
+        // Them comment
         var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
-        SqlParameter userIDParam = new SqlParameter("@PK_iUserID", userID);
-        IEnumerable<CartDetail> carts = _context.CartDetails.FromSqlRaw("sp_GetInfoCart @PK_iUserID", userIDParam);
+        IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)).ToList();
         int cartCount = carts.Count();
         _accessor?.HttpContext?.Session.SetInt32("CartCount", cartCount);
         
         return View(carts);
+    }
+
+    [HttpPost]
+    public IActionResult GetCartInfo() {
+        var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
+        SqlParameter userIDParam = new SqlParameter("@PK_iUserID", userID);
+        IEnumerable<CartDetail> carts = _context.CartDetails.FromSqlRaw("sp_GetInfoCart @PK_iUserID", userIDParam);
+        CartViewModel model = new CartViewModel {
+            Carts = carts,
+            CartCount = carts.Count()
+        };
+        return Json(model);
     }
 
     [Route("/Cart/AddToCart/{productID?}/{unitPrice?}/{quantity?}")]

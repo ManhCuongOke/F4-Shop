@@ -25,7 +25,7 @@ public class UserController : Controller {
         // Lấy số lượng giỏ hàng
         var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
         SqlParameter userIDParam = new SqlParameter("@PK_iUserID", userID);
-        IEnumerable<Cart> carts = _context.Carts.FromSqlRaw("sp_GetInfoCart @PK_iUserID", userIDParam);
+        IEnumerable<CartDetail> carts = _context.CartDetails.FromSqlRaw("sp_GetInfoCart @PK_iUserID", userIDParam);
         int cartCount = carts.Count();
         _accessor?.HttpContext?.Session.SetInt32("CartCount", cartCount);
 
