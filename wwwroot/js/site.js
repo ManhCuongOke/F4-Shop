@@ -32,15 +32,12 @@ function searchProducts(input) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             const data = JSON.parse(xhr.responseText);
             let html = "";
-            //html += "<div class='header__search-history'>";
-            //html +=     "<h3 class='header__search-history-heading'>Lịch sử tìm kiếm</h3>";
             html +=     "<ul class='header__search-history-list'>";
             html += data.map(obj => `
                             <li class="header__search-history-item">
                                 <a href="/Product/Index?categoryID=${obj.pK_iCategoryID}">${obj.sCategoryName}</a>
                             </li>`).join('');
             html +=     "</ul>";
-            //html += "</div>";
             document.querySelector('.header__search-history').innerHTML = html;
         } 
     };
