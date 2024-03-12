@@ -19,7 +19,7 @@ window.onclick = (event) => {
     }
 }
 
-// Tìm kiếm sản phẩm
+// Tìm kiếm danh mục
 function searchProducts(input) {
     document.querySelector('.header__search-history').style.display = 'block';
     var formData = new FormData();
@@ -50,7 +50,7 @@ window.onclick = (event) => {
     }
 }
 
-// load số lượng sản phẩm giỏ hàng
+// lấy số lượng sản phẩm giỏ hàng
 function getCartInfo() {
     var xhr = new XMLHttpRequest();
     xhr.open('post', '/Cart/GetCartInfo', true);
