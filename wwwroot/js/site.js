@@ -19,7 +19,7 @@ window.onclick = (event) => {
     }
 }
 
-// Tìm kiếm sản phẩm
+// Tìm kiếm danh mục
 function searchProducts(input) {
     document.querySelector('.header__search-history').style.display = 'block';
     var formData = new FormData();
@@ -32,15 +32,12 @@ function searchProducts(input) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             const data = JSON.parse(xhr.responseText);
             let html = "";
-            //html += "<div class='header__search-history'>";
-            //html +=     "<h3 class='header__search-history-heading'>Lịch sử tìm kiếm</h3>";
             html +=     "<ul class='header__search-history-list'>";
             html += data.map(obj => `
                             <li class="header__search-history-item">
                                 <a href="/Product/Index?categoryID=${obj.pK_iCategoryID}">${obj.sCategoryName}</a>
                             </li>`).join('');
             html +=     "</ul>";
-            //html += "</div>";
             document.querySelector('.header__search-history').innerHTML = html;
         } 
     };
@@ -53,7 +50,7 @@ window.onclick = (event) => {
     }
 }
 
-// load số lượng sản phẩm giỏ hàng
+// lấy số lượng sản phẩm giỏ hàng
 function getCartInfo() {
     var xhr = new XMLHttpRequest();
     xhr.open('post', '/Cart/GetCartInfo', true);
