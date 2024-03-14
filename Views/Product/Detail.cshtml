@@ -1,54 +1,80 @@
-@model IEnumerable<Product>
-<div class="row">
-    <div class="col col-8">
-        <div class="row">
-            @foreach (var product in Model)
-            {
-                <div class="col col-6">
-                    <img class="cart-detail-img" src="~/img/@product.sImageUrl" alt="">
-                </div>
-                <div class="col col-6">
-                    <h2>@product.sProductName</h2>
-                    @product.sProductDescription
-                    <div class="product__content-details-qnt-btn">
-                        <button type="button" class="product__content-details-sub-btn" onclick="reduceProduct(event)">-</button>
-                        <input name="qnt" type="text" id="qnt" value="0" class="product__content-details-qnt">
-                        <button type="button" class="product__content-details-add-btn" onclick="increaseProduct(event)">+</button>
+@model ProductViewModel
+@{
+    ViewData["Title"] = "Chi tiết";
+}
+<link rel="stylesheet" href="~/css/product.css">
+<div class="app__container">
+    <div class="card-wrapper">
+        <div class="detail">
+            <!-- card left -->
+            @foreach (var product in Model.Products) {
+                <div class="product-imgs">
+                    <div class="img-display">
+                        <div class="img-showcase">
+                            <img src="~/img/@product.sImageUrl" alt="product image" />
+                        </div>
                     </div>
-                    <button type="button" onclick="addToCart(@product.PK_iProductID, @product.dPrice)" class="btn btn-primary"> Thêm vào giỏ
-                        hàng <i class="fas fa-shopping-cart"></i></button>
-                    <a class="btn btn-primary" href="/Home/CartDetail">Mua ngay</a>
                 </div>
             }
-        </div>
-    </div>
-    <div class="col col-4">
-        Xem thêm
-    </div>
-</div>
-<div class="comment">
-    <h2>Bình luận(3)</h2>
-    <div class="row mt-4">
-        <div class="col-1">
-            <img src="~/img/no_user.jpg" class="comment-img" alt="">
-        </div>
-        <div class="col-11">
-            <input type="text" class="form-control" placeholder="Viết bình luận">
-        </div>
-    </div>
-    <div class="row mt-4">
-        <div class="col-1">
-            <img src="~/img/no_user.jpg" class="comment-img" alt="">
-        </div>
-        <div class="col-11">
-            <div><b>Công Đặng</b></div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ex iste.
-                Nulla tempora quis voluptates aliquam illo totam laudantium, sapiente commodi, iure,
-                voluptatibus cumque molestiae praesentium laboriosam ipsum expedita veniam.</p>
-            <div>
-                <a href="">Thích</a>
-                <a href="">Phản hồi</a>
-                <span>2 tuần</span>
+            <!-- card right -->
+            <div class="product-content">
+                @foreach (var product in Model.Products)
+                {
+                    <h2 class="product-title">@product.sProductName</h2>
+                    <a href="#" class="product-link product-link__active">Ghé thăm cửa hàng F4 SHOP</a>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>4.7(21)</span>
+                    </div>
+
+                    <div class="product-price">
+                        <p class="last-price">Giá cũ: <span>500.000 đ</span></p>
+                        <p class="new-price">Giá mới: <span>@product.dPrice đ(5%)</span></p>
+                    </div>
+
+                    <div class="product-detail">
+                        <h2>về mặt hàng này: </h2>
+                        <p>
+                            @product.sProductDescription
+                        </p>
+                    </div>
+                }
+
+                <div class="purchase-info">
+                    <div class='product__content-details-qnt-btn'>
+                        <button type='button' class='product__content-details-sub-btn' onclick='tru()'>-</button>
+                        <input type='text' name='quantity' id='qnt' value='1' class='product__content-details-qnt'
+                            runat='server' />
+                        <button type='button' class='product__content-details-add-btn' onclick='cong()'> +</ button>
+                    </div>
+                    <button type="button" class="btn" runat="server" onserverclick="AddProduct_SeverClick">
+                        Add to Cart <i class="fas fa-shopping-cart"></i>
+                    </button>
+                    <button type="button" class="btn">Compare</button>
+                </div>
+
+                <div class="social-links">
+                    <p>Share At: </p>
+                    <a href="#">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

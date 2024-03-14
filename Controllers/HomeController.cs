@@ -32,7 +32,7 @@ namespace Project.Controllers
 
             IEnumerable<Product> products = _homeResponsitory.getProducts().ToList();
             int totalRecord = products.Count();
-            int pageSize = 6;
+            int pageSize = 12;
             int totalPage = (int) Math.Ceiling(totalRecord / (double) pageSize);
             products = products.Skip((currentPage - 1) * pageSize).Take(pageSize);
             IEnumerable<Category> categories = _homeResponsitory.getCategories().ToList();
@@ -43,7 +43,8 @@ namespace Project.Controllers
                 CartDetails = cartDetails,
                 TotalPage = totalPage,
                 PageSize = pageSize,
-                CurrentPage = currentPage
+                CurrentPage = currentPage,
+                UserID = Convert.ToInt32(userID)
             };
             return View(model);
         }

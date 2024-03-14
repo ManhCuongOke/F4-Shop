@@ -118,7 +118,7 @@
                     <div class="row sm-gutter">
                         @foreach (var product in Model.Products) {
                             <div class="col l-2 c-6 m-4">
-                                <a class="home-product-item" href="">
+                                <a class="home-product-item" href="/Product/Detail/@product.PK_iProductID">
                                     <div class="home-product-item__img"
                                         style="background-image: url(/img/@product.sImageUrl)"></div>
                                     <h4 class="home-product-item__name">@product.sProductName</h4>

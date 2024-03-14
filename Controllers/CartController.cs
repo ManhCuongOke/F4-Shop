@@ -15,28 +15,19 @@ public class CartController : Controller {
     }
 
     public IActionResult Index() {
-        // Fix cứng dữ liệu
-        _accessor?.HttpContext?.Session.SetInt32("UserID", 1);
-
-        // Them comment
-        var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
-        IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)).ToList();
-        int cartCount = carts.Count();
-        _accessor?.HttpContext?.Session.SetInt32("CartCount", cartCount);
-        
-        return View(carts);
+        var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");  
+        IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)); 
+        ProductViewModel model = new ProductViewModel {
+            CartDetails = carts
+        };
+        return View(model); 
     }
 
     [HttpPost]
     public IActionResult GetCartInfo() {
-        var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
-        SqlParameter userIDParam = new SqlParameter("@PK_iUserID", userID);
-        IEnumerable<CartDetail> carts = _context.CartDetails.FromSqlRaw("sp_GetInfoCart @PK_iUserID", userIDParam);
-        CartViewModel model = new CartViewModel {
-            Carts = carts,
-            CartCount = carts.Count()
-        };
-        return Json(model);
+        var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");  
+        IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(userID));  
+        return Json(carts);  
     }
 
     [Route("/Cart/AddToCart/{productID?}/{unitPrice?}/{quantity?}")]

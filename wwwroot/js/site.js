@@ -57,22 +57,12 @@ function getCartInfo() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
             const data = JSON.parse(xhr.responseText);
-            // getCartCount(data);
+            console.table(data);
         }
     }
     xhr.send(null);
 }
-
-//Lấy thông tin sản phẩm trong giỏ hàng
-
-function getCartCount(data) {
-    let html = "";
-    console.log(data);
-    console.log(document.querySelector(".navbar__cart-notice").innerText);
-    for (let i = 0; i < data.length; i++) {
-        document.querySelector(".navbar__cart-notice").innerText = data[0].cartCount
-    }
-}
+//getCartInfo();
 
 // Tăng, giảm số lượng sản phẩm
 function cong(event, productID, unitPrice) {

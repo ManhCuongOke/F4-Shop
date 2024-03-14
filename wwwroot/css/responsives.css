@@ -54,12 +54,12 @@
     }
 
     .banner-right {
-        display: none; 
+        display: none;  
     }
 
-    .category-item {
-        flex: 0 0 20%;
-        min-width: 20%;
+    .category-item-home {
+        flex: 0 0 25%;
+        max-width: 25%;
     }
 }
 
@@ -137,6 +137,11 @@
         margin: 0 8px;
     }
 
+    .category-item-home {
+        flex: 0 0 25%;
+        min-width: 25%;
+    }
+
     .pagination-item {
         margin: 0;
     }
@@ -171,7 +176,7 @@
         justify-content: center;
     }
 
-    .footer__download-app-link{
+    .footer__download-app-link {
         padding: 6px 8px;
     }
 }
