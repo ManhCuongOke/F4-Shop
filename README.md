@@ -42,9 +42,6 @@
 ## Công việc của từng Dev
 Chi tiết tại: https://docs.google.com/document/d/1OA526wTnw-2Jn4faBllxIqHbD78u58EU/edit?usp=drive_link&ouid=102969611045986692309&rtpof=true&sd=true
 
-# GIT Flow
-![git-flow-feature-branch](https://github.com/nicejjss/ProjectASP/assets/77496505/30101575-985d-4851-a043-7d11bc08ab0f)
 
 
 
-# DOC: https://drive.google.com/drive/folders/1p1jBQ0WXVluZbx92vvBFwGFO9kM5cXkz?usp=drive_link
