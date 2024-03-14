@@ -1,6 +1,67 @@
-@model IEnumerable<CartDetail>
+@model ProductViewModel
+@{
+    @* Layout = "_Cart"; *@
+    ViewData["Title"] = "Giỏ hàng";
+} 
+<link rel="stylesheet" href="~/css/cart.css">
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
+<div class="app__container">
+    <div class="grid wide">
+        <div class="cart">
+            <div class="table">
+                <p class="table__total-count">Có 3 sản phẩm trong giỏ hàng của bạn</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã</th>
+                            <th class="table__col-name">Tên sản phẩm</th>
+                            <th>Ảnh</th>
+                            <th>Đơn giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                            <th>Công cụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cart in Model.CartDetails) {
+                            <tr>
+                                <td>@cart.PK_iProductID</td>
+                                <td><p class="cart__product-name">@cart.sProductName</p></td>
+                                <td><img src="~/img/@cart.sImageUrl" /></td>
+                                <td>@cart.dUnitPrice đ</td>
+                                <td>
+                                    <div class="cart__count-btns">
+                                        <button type="button" class="cart__btn-add" onclick="tru()">-</button>
+                                        <input name="qnt" type="text" id="qnt" value="@cart.iQuantity" class="cart__count-input">
+                                        <button type="button" class="cart__btn-sub" onclick="cong()">+</button>
+                                    </div>
+                                </td>
+                                <td>@cart.dMoney đ</td>
+                                <td>
+                                    <div class='btn-tools'>
+                                        <a class='btn-tool btn-tool__del' href='javascript:xoaSP({proc.Id}) '
+                                            title='Xoá sản phẩm'><i class='uil uil-trash'></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="cart__order">
+                    <div class="cart__checkout">
+                        <input type="checkbox" class="cart__checkout-input" name="" id="">
+                        <label for="" class="cart__checkout-label">Chọn tất cả</label>
+                    </div>
+                    <p class='table__total-price'>Tổng tiền: 1.000.000 đ</p>
+                    <a class="cart__order-btn" href="">Mua hàng</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<table class="table">
+
+@* <table class="table">
         <thead>
             <tr>
                 <th>Mã sản phẩm</th>
@@ -51,4 +112,4 @@
         </div>
         <button class="btn btn-primary">Mua hàng</button>
     </div>
-    </div>
+    </div> *@

@@ -96,7 +96,7 @@ html {
     height: 34px;
     padding: 0 12px;
     border-radius: 2px;
-    background-color: var(--while-color);
+    background-color: var(--white-color);
     display: flex;
     align-items: center;
     justify-content: space-between;

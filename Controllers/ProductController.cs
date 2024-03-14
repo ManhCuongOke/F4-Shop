@@ -11,14 +11,21 @@ public class ProductController : Controller {
     }
     public IActionResult Index(int categoryID) {
         IEnumerable<Product> products = _productResponsitory.getProductsByCategoryID(categoryID).ToList();
-        return View(products);
+        // Vì mình lấy layout của _Layout của kiểu là @model ProducdViewModel nó sẽ chung cho tất cả các trang, ta lấy riêng nó sẽ lỗi
+        ProductViewModel model = new ProductViewModel {
+            Products = products
+        };
+        return View(model);
     }
 
     [Route("/Product/Detail/{id?}")]
     public IActionResult Detail(int id)
     {
-        var product = _context.DisplayProductByID(id).ToList();
-        return View(product);
+        IEnumerable<Product> product = _context.DisplayProductByID(id).ToList();
+        ProductViewModel model = new ProductViewModel {
+            Products = product
+        };
+        return View(model);
     }
 
     [Route("/Home/CartDetail")]
