@@ -1,4 +1,4 @@
-# Web bán hàng sử dụng ASP.NET 6 MVC
+# Web bán hàng sử dụng ASP.NET MVC Core  7.0 
 - Luồng sử lý dữ liệu cơ bản: User->Routeing->Controller<->Model->View->User
 
 ## Thành phần chính
@@ -32,6 +32,15 @@
       - 20240212_create_table.sql
    - Các TH viết file SQL mới:
      - Create, ALter, Delete,...
+## Viết thủ tục lưu trong CSDL
+  - Thủ tục được viết trên Server và khi truy vấn ta chỉ cần gọi thủ tục đó
+## Quy tắc đặt tên trong CSDL
+ - Tên Database: db_ (Ví dụ: db_F4_Shop)
+ - Tên bảng: tbl_ (Ví dụ tbl_Categories)
+ - Tên thủ tục: sp_ (Ví dụL sp_GetCategories)
+ - ...
+## Công việc của từng Dev
+Chi tiết tại: https://docs.google.com/document/d/1OA526wTnw-2Jn4faBllxIqHbD78u58EU/edit?usp=drive_link&ouid=102969611045986692309&rtpof=true&sd=true
 
 # GIT Flow
 ![git-flow-feature-branch](https://github.com/nicejjss/ProjectASP/assets/77496505/30101575-985d-4851-a043-7d11bc08ab0f)
