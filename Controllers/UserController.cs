@@ -13,6 +13,10 @@ public class UserController : Controller {
         _accessor = accessor;
     }
 
+    public IActionResult Login() {
+        return View();
+    }
+
     [HttpPost]
     public IActionResult Login(string email = "", string password = "") {
         SqlParameter emailParam = new SqlParameter("@sEmail", email);
