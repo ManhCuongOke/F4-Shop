@@ -15,26 +15,6 @@ namespace Project.Models
         public DbSet<CartDetail> CartDetails { get; set; }
         public DbSet<Order> Orders { get; set; }
 
-        public IEnumerable<Product> DisplayProducts (int categoryID) {
-            SqlParameter categoryIDParam = new SqlParameter("@FK_iCategoryID", categoryID);
-            return this.Products.FromSqlRaw("EXEC sp_SelectProductsByCategoryID @FK_iCategoryID", categoryIDParam);
-        }
-
-        public IEnumerable<Product> DisplayProductsPagination (int pageSize, int pageNumber) {
-            SqlParameter pageSizeParam = new SqlParameter("@PageSize", pageSize);
-            SqlParameter pageNumberParam = new SqlParameter("@PageNumber", pageNumber);
-            return this.Products.FromSqlRaw("EXEC sp_PaginationProducts @PageSize, @PageNumber", pageSizeParam, pageNumberParam);
-        }
-
-        public IEnumerable<Category> DisplayCategories () {
-            return this.Categories.FromSqlRaw("select * from tbl_Categories");
-        }
-
-        public IEnumerable<Product> DisplayProductByID(int id) {
-            SqlParameter productIDParam = new SqlParameter("@PK_iProductID", id);
-            return Products.FromSqlRaw("EXEC sp_SelectProductByID @PK_iProductID", productIDParam);
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>(entity => {

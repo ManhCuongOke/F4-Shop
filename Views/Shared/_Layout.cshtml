@@ -104,12 +104,12 @@
                                         class="header__navbar-icon fa-regular fa-circle-question"></i></a> Trợ giúp</a>
                         </li>
                         <li id=""
-                            class="header__navbar-item header__navbar-item--strong header__navbar-item--separate js-enter-form">
-                            Đăng ký</li>
+                            class="header__navbar-item header__navbar-item--strong header__navbar-item--separate js-enter-form"><a class="header__navbar-item-link" href="/User/Register">Đăng ký</a></li>
                         @* <li id="" class="header__navbar-item header__navbar-item--strong js-login-form">Đăng nhập</li> *@
                         @if (@accesser?.HttpContext?.Session.GetString("UserName") == null)
                         {
-                            <li class="header__navbar-item header__navbar-item--strong js-login-form" onclick="openLoginModal()">Đăng nhập</li>
+                            <li class="header__navbar-item header__navbar-item--strong js-login-form" ><a class="header__navbar-item-link" href="/User/Login">Đăng nhập</a></li>
+                            @* onclick="openLoginModal()" *@
                         }
                         else
                         {
@@ -276,7 +276,7 @@
                                 <a href="" class="footer-item__link">Trung tâm trợ giúp</a>
                             </li>
                             <li class="footer-item">
-                                <a href="" class="footer-item__link">VanCong Shop Mail</a>
+                                <a href="" class="footer-item__link">F4 Shop Mail</a>
                             </li>
                             <li class="footer-item">
                                 <a href="" class="footer-item__link">Hướng dẫn mua hàng</a>
@@ -336,7 +336,7 @@
                         </ul>
                     </div>
                     <div class="col l-2-4 c-12 m-4">
-                        <h3 class="footer__heading">Vào cửa hàng VanCong Shop</h3>
+                        <h3 class="footer__heading">Vào cửa hàng F4 SHOP</h3>
                         <div class="footer__download">
                             <img src="~/img/qr_code.png" alt="" class="footer__download-qr">
                             <div class="footer__download-apps">
