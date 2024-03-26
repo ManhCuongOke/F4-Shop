@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="~/css/grid.css">
     <link rel="stylesheet" href="~/css/responsives.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!--=============== ICONSCOUT ===============-->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 </head>
 @inject IHttpContextAccessor accesser
 <body>
@@ -127,7 +129,7 @@
                                         <a href="">Đơn mua</a>
                                     </li>
                                     <li class="header__navbar-user-item header__navbar-user-item--separate">
-                                        <a href="">Đăng xuất</a>
+                                        <a href="/User/Logout">Đăng xuất</a>
                                     </li>
                                 </ul>
                             </li>
@@ -201,7 +203,7 @@
                                 <span class="header__cart-notice">@accesser?.HttpContext?.Session.GetInt32("CartCount")</span>
                             }
                             <!--No cart: header__cart-list--no-cart-->
-                            @if (@accesser?.HttpContext?.Session.GetInt32("UserID") == null) {
+                            @if (@accesser?.HttpContext?.Session.GetInt32("UserID") == 0) {
                                 <div class="header__cart-list header__cart-list--no-cart">
                                     <img src="~/img/no-cart.png" alt="" class="header__cart-no-cart-img">
                                     <span class="header__cart-list-no-cart-msg">
@@ -375,11 +377,10 @@
                     </div>
                     <div class="auth-form__form">
                         <div class="auth-form__group"> 
-                            <input type="text" name="email" id="" class="auth-form__input" placeholder="Email của bạn">
+                            <input type="text" name="email" class="auth-form__input" placeholder="Email của bạn" />
                         </div>
                         <div class="auth-form__group">
-                            <input type="password" name="password" id="" class="auth-form__input"
-                                placeholder="Mật khẩu của bạn">
+                            <input type="password" name="password" class="auth-form__input" placeholder="Mật khẩu của bạn" />
                         </div>
                     </div>
                     <div class="auth-form__aside">
@@ -390,7 +391,7 @@
                         </div>
                     </div>
                     <div class="auth-form__controls">
-                        <button id="" class="btn auth-form__controls-back btn--normal js-login-form-close">TRỞ
+                        <button class="btn auth-form__controls-back btn--normal js-login-form-close">TRỞ
                             LẠI</button>
                         <button type="submit" class="btn btn--primary">ĐĂNG NHẬP</button>
                     </div>
@@ -410,12 +411,23 @@
                     </a>
                 </div>
             </div>
-
         </div>
-
+    </div>
+    <div class="" id="toast">
+        @* <div class="toast toast--success">
+            <div class="toast__icon">
+                <i class="uil uil-check-circle"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Thành công</h3>
+                <p class="toast__msg">Thêm thành công</p>
+            </div>
+            <div class="toast__close">
+                <i class="uil uil-times"></i>
+            </div>
+        </div> *@
     </div>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/main.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

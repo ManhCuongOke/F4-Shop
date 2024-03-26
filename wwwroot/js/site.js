@@ -2,23 +2,6 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-const loginModal = document.querySelector(".modal");
-
-
-function openLoginModal(orderID) {
-    loginModal.classList.add("open");
-}
-
-document.querySelector(".auth-form__switch-btn").addEventListener("click", () => {
-    loginModal.classList.remove("open");
-});
-
-window.onclick = (event) => {
-    if (event.target == loginModal) {
-        loginModal.classList.remove("open");
-    }
-}
-
 // Tìm kiếm danh mục
 function searchProducts(input) {
     document.querySelector('.header__search-history').style.display = 'block';
@@ -50,138 +33,44 @@ window.onclick = (event) => {
     }
 }
 
-// lấy số lượng sản phẩm giỏ hàng
-function getCartInfo() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('post', '/Cart/GetCartInfo', true);
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            const data = JSON.parse(xhr.responseText);
-            console.table(data);
-        }
-    }
-    xhr.send(null);
-}
-//getCartInfo();
+// Toast
+function toast({ title = "", msg = "", type = "", duration = 3000}) {
+    const main = document.getElementById('toast');
+    if (main) {
+        const toast = document.createElement("div");
+        const autoRemoveId = setTimeout(() => {
+            main.removeChild(toast);
+        }, duration + 1000);
 
-// Tăng, giảm số lượng sản phẩm
-function cong(event, productID, unitPrice) {
-    // console.log(productID);
-    const parentElement = event.target.parentNode;
-    // console.log(parentElement);
-    var cong = parentElement.querySelector("#qnt").value;
-    var input = parentElement.querySelector("#qnt");
-    if (parseInt(cong) < 100) { // Nếu sau này ta convert biến này sang int, double thì không dùn constance cho biến qnt
-        input.value = parseInt(cong) + 1;
-        console.log(input.value);
-        var formData = new FormData(); // Gửi dữ liệu dạng formData
-        formData.append('quantity', input.value);
-        formData.append('productID', productID);
-        formData.append('unitPrice', unitPrice)
-        var xhr = new XMLHttpRequest();
-        xhr.open('post', '/Cart/Quantity', true);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                const money = JSON.parse(xhr.responseText);
-                const trParent = parentElement.parentNode.parentNode;
-                // console.log(money.money);
-                trParent.querySelector("#money").innerText = money.money;
-            }
-        }
-        xhr.send(formData);
-    }
-}
-
-function tru(event, productID, unitPrice) {
-    const parentElement = event.target.parentNode;
-    var tru = parentElement.querySelector("#qnt").value;
-    var input = parentElement.querySelector("#qnt");
-    if (parseInt(tru) > 1) {
-        input.value = parseInt(tru) - 1;
-        var formData = new FormData();
-        formData.append('quantity', input.value);
-        formData.append('productID', productID);
-        formData.append('unitPrice', unitPrice);
-        var xhr = new XMLHttpRequest();
-        xhr.open('post', '/Cart/Quantity', true);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                const money = JSON.parse(xhr.responseText);
-                const trParent = parentElement.parentNode.parentNode;
-                trParent.querySelector("#money").innerText = money.money;
+        toast.onclick = (e) => {
+            if (e.target.closest('.toast__close')) {
+                main.removeChild(toast);
+                clearTimeout(autoRemoveId);
             }
         };
-        xhr.send(formData);
-    } else if ((parseInt(tru) == 0)) {
-        if (confirm("Bạn muốn xoá sản phẩm này khỏi giỏ hàng")) {
 
-        }
-    }
-}
-
-// Tăng / Giảm số lượng sản phẩm trong chi tiết sản phẩm
-function increaseProduct(event) {
-    const parentElement = event.target.parentNode;
-    var increase = parentElement.querySelector("#qnt").value;
-    if (parseInt(increase) < 100) {
-        parentElement.querySelector("#qnt").value = parseInt(increase) + 1;
-    }
-}
-
-function reduceProduct(event) {
-    const parentElement = event.target.parentNode;
-    var reduce = parentElement.querySelector("#qnt").value;
-    if (parseInt(reduce) > 0) {
-        parentElement.querySelector("#qnt").value = parseInt(reduce) - 1;
-    }
-}
-
-//AddToCart
-function addToCart(productID, price) {
-    var quantity = document.getElementById("qnt").value;
-    if (parseInt(quantity) == 0) {
-        alert('Bạn chưa nhập số lượng sản phẩm!');
-    } else {
-        var xhr = new XMLHttpRequest();
-        xhr.open('get', '/Cart/AddToCart/' + productID + '/' + price + '/' + quantity + '', true);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                const obj = JSON.parse(xhr.responseText);
-                alert(obj.msg);
-            }
-        }
-        xhr.send(null);
-    }
-}
-
-function deleteProduct(productID) {
-    if (confirm("Bạn có chắc muốn xoá sản phẩm này khỏi giỏ hàng?")) {
-        var formData = new FormData();
-        formData.append('productID', productID);
-        var xhr = new XMLHttpRequest();
-        xhr.open('post', '/Cart/DeleteProduct', true);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                const msg = JSON.parse(xhr.responseText);
-                document.getElementById("product__" + productID).style.display = 'none';
-                alert(`${msg.msg}`);
-            } 
+        const icons = {
+            success: 'uil uil-check-circle',
+            error: 'uil uil-exclamation-triangle'
         };
-        xhr.send(formData);
-    }
-}
 
-// Checkout
-function checkout() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('post', '/Order/Checkout', true);
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            data = JSON.parse(xhr.responseText);
-            data.map(obj => {
-                document.querySelector(".money").innerText = obj.dTotalMoney;
-            });
-        }
-    };
-    xhr.send(null);
+        icon = icons[type];
+        const delay = (duration / 1000).toFixed(2);
+
+        toast.classList.add('toast', `toast--${type}`);
+        toast.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
+        toast.innerHTML = `
+            <div class="toast__icon">
+                <i class="${icon}"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">${title}</h3>
+                <p class="toast__msg">${msg}</p>
+            </div>
+            <div class="toast__close">
+                <i class="uil uil-times"></i>
+            </div>
+        `;
+        main.appendChild(toast);
+    }
 }

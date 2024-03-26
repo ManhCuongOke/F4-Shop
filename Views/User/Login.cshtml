@@ -1,7 +1,8 @@
 @{
     Layout = "_UserLayout";
-    ViewData["Title"] = "Đăng ký";
+    ViewData["Title"] = "Đăng nhập";
 }
+@model User
 <!--Login form-->
 <div class="app__container">
     <div class="auth">
@@ -12,16 +13,17 @@
             <div class="auth-form">
                 <form action="/User/Login" method="post" class="auth-form__container">
                     <div class="auth-form__header">
-                        <h3 class="auth-form__heading">Đăng nhập</h3>
+                        <h3 class="auth-form__heading">@ViewData["Title"]</h3>
                         @* <span class="auth-form__switch-btn"><i class="fa-solid fa-xmark auth-form__close"></i></span> *@
                     </div>
                     <div class="auth-form__form">
                         <div class="auth-form__group">
-                            <input type="text" name="email" id="" class="auth-form__input" placeholder="Email của bạn">
+                            <input type="text" id="" asp-for="sEmail" class="auth-form__input" placeholder="Email của bạn" />
+                            <span asp-validation-for="sEmail" class="auth-msg auth-msg__err"></span>
                         </div>
                         <div class="auth-form__group">
-                            <input type="password" name="password" id="" class="auth-form__input"
-                                placeholder="Mật khẩu của bạn">
+                            <input type="password" asp-for="sPassword" id="" class="auth-form__input" placeholder="Mật khẩu của bạn" />
+                            <span asp-validation-for="sPassword" class="auth-msg auth-msg__err"></span>
                         </div>
                     </div>
                     <div class="auth-form__aside">

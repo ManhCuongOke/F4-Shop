@@ -60,7 +60,7 @@ a.header_logo-link {
 }
 
 .auth__logo {
-    position: absolute;
+    /* position: absolute; */
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -122,6 +122,10 @@ a.header_logo-link {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.auth-msg__err {
+    color: var(--primary-color);
 }
 
     .auth-form__input:focus {

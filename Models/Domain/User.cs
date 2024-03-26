@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project.Models
 {
@@ -8,8 +9,10 @@ namespace Project.Models
         public string sName { get; set; }
         [NotMapped]
         public string sAddress { get; set; }
+        [Required(ErrorMessage = "Bạn chưa nhập email")]
         public string sEmail { get; set; }
         public int FK_iRoleID { get; set; }
+        [Required(ErrorMessage = "Bạn chưa nhập mật khẩu")]
         public string sPassword { get; set; }
         [NotMapped]
         public DateTime dDateBirth {  get; set; }

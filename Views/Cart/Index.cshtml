@@ -13,7 +13,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Mã</th>
+                            <th>Chọn</th>
                             <th class="table__col-name">Tên sản phẩm</th>
                             <th>Ảnh</th>
                             <th>Đơn giá</th>
@@ -24,23 +24,24 @@
                     </thead>
                     <tbody>
                         @foreach (var cart in Model.CartDetails) {
-                            <tr>
-                                <td>@cart.PK_iProductID</td>
+                            <tr id="product__@cart.PK_iProductID">
+                                <td>
+                                    <input type="checkbox" class="cart__checkout-input" name="" id="">
+                                </td>
                                 <td><p class="cart__product-name">@cart.sProductName</p></td>
                                 <td><img src="~/img/@cart.sImageUrl" /></td>
                                 <td>@cart.dUnitPrice đ</td>
                                 <td>
                                     <div class="cart__count-btns">
-                                        <button type="button" class="cart__btn-add" onclick="tru()">-</button>
-                                        <input name="qnt" type="text" id="qnt" value="@cart.iQuantity" class="cart__count-input">
-                                        <button type="button" class="cart__btn-sub" onclick="cong()">+</button>
+                                        <button type="button" class="cart__btn-add" onclick="tru(event, @cart.PK_iProductID, @cart.dUnitPrice)">-</button>
+                                        <input name="qnt" type="text" id="qnt" value="@cart.iQuantity" class="cart__count-input" />
+                                        <button type="button" class="cart__btn-sub" onclick="cong(event, @cart.PK_iProductID, @cart.dUnitPrice)">+</button>
                                     </div>
                                 </td>
-                                <td>@cart.dMoney đ</td>
+                                <td id="money">@cart.dMoney đ</td>
                                 <td>
                                     <div class='btn-tools'>
-                                        <a class='btn-tool btn-tool__del' href='javascript:xoaSP({proc.Id}) '
-                                            title='Xoá sản phẩm'><i class='uil uil-trash'></i></a>
+                                        <a class='btn-tool btn-tool__del' href='javascript:deleteProduct(@cart.PK_iProductID)' title='Xoá sản phẩm'><i class='uil uil-trash'></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -49,7 +50,7 @@
                 </table>
                 <div class="cart__order">
                     <div class="cart__checkout">
-                        <input type="checkbox" class="cart__checkout-input" name="" id="">
+                        <input type="checkbox" onchange="checkout()" class="cart__checkout-input" name="" id="">
                         <label for="" class="cart__checkout-label">Chọn tất cả</label>
                     </div>
                     <p class='table__total-price'>Tổng tiền: 1.000.000 đ</p>
@@ -60,56 +61,4 @@
     </div>
 </div>
 
-
-@* <table class="table">
-        <thead>
-            <tr>
-                <th>Mã sản phẩm</th>
-                <th>Mã tên sản phẩm</th>
-                <th>Ảnh</th>
-                <th>Số lượng</th>
-                <th>Đơn giá</th>
-                <th>Thành tiền</th>
-                <th>Công cụ</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var cart in Model)
-            {
-                <tr id="product__@cart.PK_iProductID">
-                    <td>@cart.PK_iProductID</td>
-                    <td>
-                        <input type="checkbox" name="" id="">
-                        @cart.sProductName
-                    </td>
-                    <td>
-                        <img width="100" src="~/img/@cart.sImageUrl" alt="">
-                    </td>
-                    <td>
-                        <div class="product__content-details-qnt-btn">
-                            <button type="button" class="product__content-details-sub-btn" onclick="tru(event, @cart.PK_iProductID, @cart.dUnitPrice)">-</button>
-                            <input name="qnt" type="text" id="qnt" value="@cart.iQuantity" class="product__content-details-qnt">
-                            <button type="button" class="product__content-details-add-btn" onclick="cong(event, @cart.PK_iProductID, @cart.dUnitPrice)">+</button>
-                        </div>
-                    </td>
-                    <td>@cart.dUnitPrice</td>
-                    <td id="money">@cart.dMoney</td>
-                    <td>
-                        <a href="javascript:deleteProduct(@cart.PK_iProductID)">Xoá</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <div class="checkout">
-    <div class="checkcout-content">
-        <div class="checkout-check">
-            <input type="checkbox" onchange="checkout()" name="" id="">
-            <label for="">Chọn tất cả</label>
-        </div>
-        <div class="checkout-total-price">
-            Tổng thanh toán: <div class="money">10.000.000.00</div> VNĐ
-        </div>
-        <button class="btn btn-primary">Mua hàng</button>
-    </div>
-    </div> *@
+<script src="~/js/cart.js"></script>
