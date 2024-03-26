@@ -1,13 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using Project.Models;
 
 public class CartController : Controller {
     private readonly IHttpContextAccessor _accessor;
     private readonly DatabaseContext _context;
-    private readonly ICartReponsitoty _cartResponsitory;
-    public CartController(IHttpContextAccessor accessor, DatabaseContext context, ICartReponsitoty cartReponsitoty)
+    private readonly ICartReponsitory _cartResponsitory;
+    public CartController(IHttpContextAccessor accessor, DatabaseContext context, ICartReponsitory cartReponsitoty)
     {
         _accessor = accessor;
         _context = context;
@@ -30,26 +31,36 @@ public class CartController : Controller {
         return Json(carts);  
     }
 
-    [Route("/Cart/AddToCart/{productID?}/{unitPrice?}/{quantity?}")]
-    [HttpGet("/Cart/AddToCart/{productID?}/{unitPrice?}/{quantity?}")]
+    [HttpPost]
     public IActionResult AddToCart(int productID, double unitPrice, int quantity)
     {
         var sessionUserID = _accessor?.HttpContext?.Session.GetInt32("UserID");
+        if (sessionUserID == null) {
+            sessionUserID = 0;
+        } 
         SqlParameter userIDParam = new SqlParameter("@PK_iUserID", sessionUserID);
-        var userID = _context.Users.FromSqlRaw("EXEC sp_CheckUserLogin @PK_iUserID", userIDParam);
-        if (userID == null)
+        List<User> user = _context.Users.FromSqlRaw("EXEC sp_CheckUserLogin @PK_iUserID", userIDParam).ToList();
+
+        List<CartDetail> checkProduct = _cartResponsitory.checkProduct(Convert.ToInt32(sessionUserID), productID).ToList();
+
+        if (user.Count() == 0)
         {
             string msg = "Bạn phải đăng nhập mới được thêm vào giỏ hàng!";
             return Json(new { msg });
+        } else if (checkProduct.Count() != 0) // Kiểm tra sản phẩm bị trùng trong giỏ hàng
+        {
+            string msg = "Sản phẩm này đã có trong giỏ hàng";
+            return Json(new {msg});
         }
         else
         {
             // https://www.c-sharpcorner.com/blogs/date-and-time-format-in-c-sharp-programming1
             // Thêm mã giỏ hàng
             SqlParameter updateTimeParam = new SqlParameter("@dUpdateTime", DateTime.Now.ToString("dd/MM/yyyy"));
-            List<Cart> cart = _context.Carts.FromSqlRaw("SET DATEFORMAT dmy EXEC sp_GetCartIDByTime @dUpdateTime", updateTimeParam).ToList();
+            List<Cart> cart = _cartResponsitory.checkCartIDExist().ToList();
+
             int cartID;
-            if (cart != null) {
+            if (cart.Count() != 0) {
                 cartID = cart[0].PK_iCartID;
                 var updateTime = cart[0].dUpdateTime;
             } else {
@@ -66,7 +77,7 @@ public class CartController : Controller {
             SqlParameter moneyParam = new SqlParameter("@dMonney", unitPrice * quantity);
             _context.Database.ExecuteSqlRaw("sp_InsertProductIntoCartDetail @PK_iUserID, @PK_iProductID, @PK_iCartID, @iQuantity, @dUnitPrice, @dDiscount, @dMonney", userIDParam, productIDParam, cartIDParam, quantityParam, unitPriceParam, discountParam, moneyParam);
             string msg = "Thêm vào giỏ hàng thành công!";
-            return Json(new {msg});
+            return Json(new { msg });
         }
     }
 

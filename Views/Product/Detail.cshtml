@@ -42,23 +42,18 @@
                             @product.sProductDescription
                         </p>
                     </div>
-                }
-
-                <div class="purchase-info">
-                    <div class='product__content-details-qnt-btn'>
-                        <button type='button' class='product__content-details-sub-btn' onclick='tru()'>-</button>
-                        <input type='text' name='quantity' id='qnt' value='1' class='product__content-details-qnt'
-                            runat='server' />
-                        <button type='button' class='product__content-details-add-btn' onclick='cong()'> +</ button>
+                    <div class="purchase-info">
+                        <div class='product__content-details-qnt-btn'>
+                            <button type="button" class="product__content-details-sub-btn" onclick="reduceProduct(event)">-</button>
+                            <input type="text" name="quantity" id="qnt" value="0" class="product__content-details-qnt" />
+                            <button type="button" class="product__content-details-add-btn" onclick="increaseProduct(event)">+</button>
+                        </div>
+                        <button type="button" onclick="addToCart(@product.PK_iProductID, @product.dPrice)" class="btn"> Thêm vào giỏ <i class="fas fa-shopping-cart"></i></button>
+                        <button type="button" class="btn">Compare</button>
                     </div>
-                    <button type="button" class="btn" runat="server" onserverclick="AddProduct_SeverClick">
-                        Add to Cart <i class="fas fa-shopping-cart"></i>
-                    </button>
-                    <button type="button" class="btn">Compare</button>
-                </div>
-
+                }
                 <div class="social-links">
-                    <p>Share At: </p>
+                    <p>Chia sẻ: </p>
                     <a href="#">
                         <i class="fab fa-facebook-f"></i>
                     </a>
@@ -77,5 +72,73 @@
                 </div>
             </div>
         </div>
+        @* <div class="comment">
+            <div class="comment__user">
+                <img src="~/img/no_user.jpg" alt="" class="comment__user-img">
+                <p class="comment__username">Công Đặng</p>
+                <p class="comment__at">2 tuần trước</p>
+            </div>
+            <div class="comment__controls">
+                <div class="comment__reply">
+                    <i class="uil uil-corner-up-left-alt comment__icon"></i>
+                    Xoá
+                </div>
+                <div class="comment__reply">
+                    <i class="uil uil-corner-up-left-alt comment__icon"></i>
+                    Chỉnh sửa
+                </div>
+                <div class="comment__reply">
+                    <i class="uil uil-corner-up-left-alt comment-icon"></i>
+                    Phản hồi
+                </div>
+            </div>
+            <div class="comment__text">
+                <span class="comment__reply-to"></span>
+                <span class="comment__text-body">
+                    Ấn tượng! Mặc dù có vẻ như tính năng kéo có thể được cải thiện. 
+                    Nhưng nhìn chung nó có vẻ đáng kinh ngạc. Bạn đã hoàn thành tốt 
+                    thiết kế và khả năng phản hồi ở nhiều điểm dừng khác nhau hoạt 
+                    động thực sự tốt.
+                </span>
+            </div>
+            <div class="comment__replies">
+                <div class="comment__user">
+                    <img src="~/img/no_user.jpg" alt="" class="comment__user-img">
+                    <p class="comment__username">Công Đặng</p>
+                    <p class="comment__at">2 tuần trước</p>
+                </div>
+                <div class="comment__controls">
+                    <div class="comment__reply">
+                        <i class="uil uil-corner-up-left-alt comment__icon"></i>
+                        Xoá
+                    </div>
+                    <div class="comment__reply">
+                        <i class="uil uil-corner-up-left-alt comment__icon"></i>
+                        Chỉnh sửa
+                    </div>
+                    <div class="comment__reply">
+                        <i class="uil uil-corner-up-left-alt comment-icon"></i>
+                        Phản hồi
+                    </div>
+                </div>
+                <div class="comment__text">
+                    <span class="comment__reply-to"></span>
+                    <span class="comment__text-body">
+                        Ấn tượng! Mặc dù có vẻ như tính năng kéo có thể được cải thiện.
+                        Nhưng nhìn chung nó có vẻ đáng kinh ngạc. Bạn đã hoàn thành tốt
+                        thiết kế và khả năng phản hồi ở nhiều điểm dừng khác nhau hoạt
+                        động thực sự tốt.
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="comment__section">
+            <div class="comment__add">
+                <img src="~/img/no_user.jpg" alt="" class="comment__add-img">
+                <textarea class="comment__add-input"></textarea>
+                <button class="comment__add-btn">Gửi</button>
+            </div>
+        </div> *@
     </div>
 </div>
+<script src="~/js/product_detail.js"></script>

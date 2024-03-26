@@ -17,13 +17,13 @@
                 </h3>
                 <ul class="category-mobile-list">
                     <li class="category-mobile-item category-mobile-item--active">
-                        <a href="#" class="category-mobile__link">Trang điểm mắt</a>
+                        <a href="#" class="category-mobile__link">Tai nghe Bluetooth</a>
                     </li>
                     <li class="category-mobile-item">
-                        <a href="#" class="category-mobile__link">Trang điểm môi</a>
+                        <a href="#" class="category-mobile__link">Sạc dự phòng</a>
                     </li>
                     <li class="category-mobile-item">
-                        <a href="#" class="category-mobile__link">Trang điểm mặt</a>
+                        <a href="#" class="category-mobile__link">Loa</a>
                     </li>
                 </ul>
             </nav>
@@ -35,6 +35,8 @@
                         Danh mục
                     </h3>
                     <ul class="category-list">
+                        @foreach (var category in Model.Categories) {
+                        }
                         <li class="category-item category-item--active">
                             <a href="#" class="category-item__link">Tai nghe Bluetooth</a>
                         </li>
@@ -48,86 +50,56 @@
                 </nav>
             </div>
             <div class="col l-10 m-12 c-12">
-                <div class="home-filter hide-on-mobile-table">
-                    <span class="home-filter__label">Sắp xếp theo</span>
-                    <button class="home-filter__btn btn">Phổ biến</button>
-                    <button class="home-filter__btn btn btn--primary">Mới nhất</button>
-                    <button class="home-filter__btn btn">Bán chạy</button>
-                    <div class="select-input">
-                        <span class="select-input__label">
-                            Giá
-                        </span>
-                        <i class="select-input-icon fa-solid fa-chevron-down"></i>
-                        <!--List options-->
-                        <ul class="select-input__list">
-                            <li class="select-input__item">
-                                <a href="#" class="select-input__link">Giá: Thấp đến cao</a>
-                            </li>
-                            <li class="select-input__item">
-                                <a href="#" class="select-input__link">Giá: Cao đến thấp</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="home-filter__page">
-                        <span class="home-filter__page-num">
-                            <span class="home-filter__page-current">1</span>
-                            /
-                            14
-                        </span>
-                        <div class="home-filter__page-control">
-                            <a href="" class="home-filter__page-btn home-filter__page-btn--disabled "><i
-                                    class=" home-filter__page-icon fas fa-angle-left"></i></a>
-                            <a href="" class="home-filter__page-btn"><i
-                                    class="home-filter__page-icon fas fa-angle-right"></i></a>
+                @if (Model.CurrentCategoryID != 0) {
+                    <div class="home-filter hide-on-mobile-table">
+                        <span class="home-filter__label">Sắp xếp theo</span>
+                        <button class="home-filter__btn btn">Phổ biến</button>
+                        <button class="home-filter__btn btn btn--primary">Mới nhất</button>
+                        <button class="home-filter__btn btn">Bán chạy</button>
+                        <div class="select-input">
+                            <span class="select-input__label">
+                                Giá
+                            </span>
+                            <i class="select-input-icon fa-solid fa-chevron-down"></i>
+                            <!--List options-->
+                            <ul class="select-input__list">
+                                <li class="select-input__item">
+                                    <a href="/Product/Sort?categoryID=@Model.CurrentCategoryID&sortType=asc" class="select-input__link">Giá: Thấp đến cao</a>
+                                </li>
+                                <li class="select-input__item">
+                                    <a href="/Product/Sort?categoryID=@Model.CurrentCategoryID&sortType=desc" class="select-input__link">Giá: Cao đến thấp</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="home-filter__page">
+                            <span class="home-filter__page-num">
+                                <span class="home-filter__page-current">1</span>
+                                /
+                                14
+                            </span>
+                            <div class="home-filter__page-control">
+                                <a href="" class="home-filter__page-btn home-filter__page-btn--disabled "><i
+                                        class=" home-filter__page-icon fas fa-angle-left"></i></a>
+                                <a href="" class="home-filter__page-btn"><i
+                                        class="home-filter__page-icon fas fa-angle-right"></i></a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
 
                 <nav class="mobile-category">
                     <ul class="mobile-category__list">
-                        <li class="mobile-category__item">
-                            <a href="" class="mobile-category__link">Dụng cụ & Thiết bị tiện ích Dụng cụ & Thiết bị tiện
-                                ích Dụng cụ & Thiết bị tiện ích</a>
-                        </li>
-                        <li class="mobile-category__item">
-                            <a href="" class="mobile-category__link">Dụng cụ & Thiết bị tiện ích</a>
-                        </li>
-                        <li class="mobile-category__item">
-                            <a href="" class="mobile-category__link">Dụng cụ & Thiết bị tiện ích</a>
-                        </li>
-                        <li class="mobile-category__item">
-                            <a href="" class="mobile-category__link">Dụng cụ & Thiết bị tiện ích</a>
-                        </li>
-                        <li class="mobile-category__item">
-                            <a href="" class="mobile-category__link">Dụng cụ & Thiết bị tiện ích</a>
-                        </li>
-                        <li class="mobile-category__item">
-                            <a href="" class="mobile-category__link">Dụng cụ & Thiết bị tiện ích</a>
-                        </li>
-                        <li class="mobile-category__item">
-                            <a href="" class="mobile-category__link">Dụng cụ & Thiết bị tiện ích</a>
-                        </li>
-                        <li class="mobile-category__item">
-                            <a href="" class="mobile-category__link">Dụng cụ & Thiết bị tiện ích</a>
-                        </li>
-                        <li class="mobile-category__item">
-                            <a href="" class="mobile-category__link">Dụng cụ & Thiết bị tiện ích</a>
-                        </li>
-                        <li class="mobile-category__item">
-                            <a href="" class="mobile-category__link">Dụng cụ & Thiết bị tiện ích</a>
-                        </li>
-                        <li class="mobile-category__item">
-                            <a href="" class="mobile-category__link">Dụng cụ & Thiết bị tiện ích</a>
-                        </li>
-                        <li class="mobile-category__item">
-                            <a href="" class="mobile-category__link">Dụng cụ & Thiết bị tiện ích</a>
-                        </li>
+                        @foreach (var category in Model.Categories) {
+                            <li class="mobile-category__item">
+                                <a href="/Product/Index?categoryID=@category.PK_iCategoryID" class="mobile-category__link">@category.sCategoryName</a>
+                            </li>
+                        }
                     </ul>
                 </nav>
 
                 <div class="home-product">
                     <!--Grid -> Row -> Column-->
-                    <div class="row sm-gutter ">
+                    <div class="row sm-gutter product__container">
                         <!--Product item-->
                         @foreach (var products in Model.Products) {
                             <div class="col l-2-4 c-6 m-4">
@@ -205,3 +177,4 @@
         </div>
     </div>
 </div>
+<script src="~/js/product.js"></script>
