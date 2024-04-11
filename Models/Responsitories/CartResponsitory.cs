@@ -46,4 +46,12 @@ public class CartResponsitory : ICartReponsitory
         SqlParameter productIDPram = new SqlParameter("@PK_iProductID", productID);
         return _context.CartDetails.FromSqlRaw("sp_CheckProductInCartDetail @PK_iUserID, @PK_iProductID", userIDPram, productIDPram);
     }
+
+    public bool deleteProductInCart(int productID, int userID)
+    {
+        SqlParameter userIDParam = new SqlParameter("@PK_iUserID", userID);
+        SqlParameter productIDParam = new SqlParameter("@PK_iProductID", productID);
+        _context.Database.ExecuteSqlRaw("sp_DeleteProductInCart @PK_iUserID, @PK_iProductID", userIDParam, productIDParam);
+        return true;
+    }
 }

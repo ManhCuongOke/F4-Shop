@@ -4,4 +4,5 @@ public interface ICartReponsitory {
     bool insertCart();
     bool insertCartDetail(int userID, int productID, int cartID, int quantity, double unitPrice);
     IEnumerable<CartDetail> checkProduct(int userID, int productID);
+    bool deleteProductInCart(int productID, int userID);
 }

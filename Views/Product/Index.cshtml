@@ -1,4 +1,5 @@
 @model ProductViewModel
+@inject IHttpContextAccessor accesser
 
 @{
     ViewData["Title"] = "Sản phẩm";
@@ -35,17 +36,21 @@
                         Danh mục
                     </h3>
                     <ul class="category-list">
-                        @foreach (var category in Model.Categories) {
+                        @if (@accesser?.HttpContext?.Session.GetInt32("CategoryID") != 0) {
+                            @foreach (var category in Model.Categories)
+                            {
+                                if (category.PK_iCategoryID == Model.CurrentCategoryID) {
+                                    @* Vì sản phẩm chọn ra tất cả mã danh mục giống nhau nên ta so sánh được *@
+                                    <li class="category-item category-item--active">
+                                        <a href="#" class="category-item__link">@category.sCategoryName</a>
+                                    </li>
+                                } else {
+                                    <li class="category-item">
+                                        <a href="#" class="category-item__link">@category.sCategoryName</a>
+                                    </li>
+                                }
+                            }
                         }
-                        <li class="category-item category-item--active">
-                            <a href="#" class="category-item__link">Tai nghe Bluetooth</a>
-                        </li>
-                        <li class="category-item">
-                            <a href="#" class="category-item__link">Loa</a>
-                        </li>
-                        <li class="category-item">
-                            <a href="#" class="category-item__link">Sạc dự phòng</a>
-                        </li>
                     </ul>
                 </nav>
             </div>
@@ -103,7 +108,7 @@
                         <!--Product item-->
                         @foreach (var products in Model.Products) {
                             <div class="col l-2-4 c-6 m-4">
-                                <a class="home-product-item" href="/Product/Detail/@products.PK_iProductID">
+                                <a class="home-product-item" href="/product/detail/@products.PK_iProductID">
                                     <div class="home-product-item__img"
                                         style="background-image: url(/img/@products.sImageUrl);"></div>
                                     <h4 class="home-product-item__name">@products.sProductName

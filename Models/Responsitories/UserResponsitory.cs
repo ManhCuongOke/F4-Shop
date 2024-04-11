@@ -10,6 +10,12 @@ public class UserResponsitory : IUserResponsitory
         _context = context;
     }
 
+    public IEnumerable<User> checkUserLogin(int userID)
+    {
+        SqlParameter userIDParam = new SqlParameter("@PK_iUserID", userID);
+        return _context.Users.FromSqlRaw("EXEC sp_CheckUserLogin @PK_iUserID", userIDParam).ToList();
+    }
+
     public IEnumerable<User> login(string email, string password)
     {
         SqlParameter emailParam = new SqlParameter("@sEmail", email);
@@ -17,8 +23,14 @@ public class UserResponsitory : IUserResponsitory
         return _context.Users.FromSqlRaw("EXEC sp_LoginEmailAndPassword @sEmail, @sPassword", emailParam, passwordParam);
     }
 
-    public bool register()
+    public bool register(UserViewModel user)
     {
-        throw new NotImplementedException();
+        // Phải đặt enctype="multipart/form-data" thì IFromFile mới có giá trị
+        SqlParameter roleIdParam = new SqlParameter("@FK_iRoleID", 1);
+        SqlParameter nameParam = new SqlParameter("@sName", user.sName);
+        SqlParameter emailParam = new SqlParameter("@sEmail", user.sEmail);
+        SqlParameter passwordParam = new SqlParameter("@sPassword", user.sPassword);
+        _context.Database.ExecuteSqlRaw("EXEC sp_InsertUser @FK_iRoleID, @sName, @sEmail, @sPassword", roleIdParam, nameParam, emailParam, passwordParam);
+        return true;
     }
 }

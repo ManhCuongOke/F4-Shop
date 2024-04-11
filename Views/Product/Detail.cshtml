@@ -2,143 +2,280 @@
 @{
     ViewData["Title"] = "Chi tiết";
 }
-<link rel="stylesheet" href="~/css/product.css">
+<link rel="stylesheet" href="~/css/product_detail.css">
 <div class="app__container">
-    <div class="card-wrapper">
-        <div class="detail">
-            <!-- card left -->
+    <div class="detail">
+        <!-- card left -->
+        <div class="detail__left">
             @foreach (var product in Model.Products) {
-                <div class="product-imgs">
-                    <div class="img-display">
-                        <div class="img-showcase">
-                            <img src="~/img/@product.sImageUrl" alt="product image" />
-                        </div>
-                    </div>
-                </div>
+                <img src="~/img/@product.sImageUrl" alt="product image" class="detail__left-img" />
             }
-            <!-- card right -->
-            <div class="product-content">
-                @foreach (var product in Model.Products)
-                {
-                    <h2 class="product-title">@product.sProductName</h2>
-                    <a href="#" class="product-link product-link__active">Ghé thăm cửa hàng F4 SHOP</a>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                        <span>4.7(21)</span>
-                    </div>
+        </div>
+        <!-- card right -->
+        <div class="detail__right">
+            @foreach (var product in Model.Products) {
+                <h2 class="detail__right-title">@product.sProductName</h2>
+                <div class="detail__price">
+                    <p class="detail__price-old"><span>500.000 đ</span></p>
+                    <p class="detail__price-new"><span>@product.dPrice đ</span></p>
+                </div>
 
-                    <div class="product-price">
-                        <p class="last-price">Giá cũ: <span>500.000 đ</span></p>
-                        <p class="new-price">Giá mới: <span>@product.dPrice đ(5%)</span></p>
+                <div class="detail__text">
+                    <h2 class="detail__text-title">về mặt hàng này: </h2>
+                    <p class="detail__text-desc">
+                        @product.sProductDescription
+                    </p>
+                </div>
+                <div class="detail__btns">
+                    <div class="detail__btn-count">
+                        <button type="button" class="detail__btn-count-btn" onclick="reduceProduct(event)">-</button>
+                        <input type="text" name="quantity" id="qnt" value="0" class="detail__btn-count-input" />
+                        <button type="button" class="detail__btn-count-btn" onclick="increaseProduct(event)">+</button>
                     </div>
-
-                    <div class="product-detail">
-                        <h2>về mặt hàng này: </h2>
-                        <p>
-                            @product.sProductDescription
-                        </p>
+                    <button type="button" onclick="addToCart(@product.PK_iProductID, @product.dPrice)" class="detail__btn-add"> Thêm vào giỏ
+                        <i class="fas fa-shopping-cart detail__cart-icon"></i>
+                    </button>
+                    <button type="button" class="btn btn--primary detail__btn-buy-now">Mua ngay</button>
+                </div>
+            } 
+            <div class="detail__social">
+                <p class="detail__social-title">Chia sẻ: </p>
+                <a class="detail__social-link" href="#">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a class="detail__social-link" href="#">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a class="detail__social-link" href="#">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a class="detail__social-link" href="#">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a class="detail__social-link" href="#">
+                    <i class="fab fa-pinterest"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="grid wide">
+        <div class="comment">
+            <div class="comment__title">ĐÁNH GIÁ VÀ NHẬN XÉT SẢN PHẨM</div>
+            <div class="rate">
+                <div class="rate__header">
+                    <div class="rate__title">
+                        <div class="rate__title-point">4.8</div>
+                        <div class="rate__title-total">/5</div>
                     </div>
-                    <div class="purchase-info">
-                        <div class='product__content-details-qnt-btn'>
-                            <button type="button" class="product__content-details-sub-btn" onclick="reduceProduct(event)">-</button>
-                            <input type="text" name="quantity" id="qnt" value="0" class="product__content-details-qnt" />
-                            <button type="button" class="product__content-details-add-btn" onclick="increaseProduct(event)">+</button>
+                    <div class="rate__stars">
+                        <i class="uis uis-star"></i>
+                        <i class="uis uis-star"></i>
+                        <i class="uis uis-star"></i>
+                        <i class="uis uis-star"></i>
+                        <i class="uis uis-star-half-alt"></i>
+                    </div>
+                    <div class="rate__evaluate">300 đánh giá</div>
+                </div>
+                <div class="rate__body">
+                    <div class="rate__star">
+                        <div class="rate__star-5-icon">
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon"></i>
                         </div>
-                        <button type="button" onclick="addToCart(@product.PK_iProductID, @product.dPrice)" class="btn"> Thêm vào giỏ <i class="fas fa-shopping-cart"></i></button>
-                        <button type="button" class="btn">Compare</button>
+                        <div class="rate__num-5-percent">
+                            <div class="rate__bar">
+                                <span class="rate__percent-box"></span>
+                            </div>
+                            <div class="rate__percent-count">226</div>
+                        </div>
                     </div>
-                }
-                <div class="social-links">
-                    <p>Chia sẻ: </p>
-                    <a href="#">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-pinterest"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        @* <div class="comment">
-            <div class="comment__user">
-                <img src="~/img/no_user.jpg" alt="" class="comment__user-img">
-                <p class="comment__username">Công Đặng</p>
-                <p class="comment__at">2 tuần trước</p>
-            </div>
-            <div class="comment__controls">
-                <div class="comment__reply">
-                    <i class="uil uil-corner-up-left-alt comment__icon"></i>
-                    Xoá
-                </div>
-                <div class="comment__reply">
-                    <i class="uil uil-corner-up-left-alt comment__icon"></i>
-                    Chỉnh sửa
-                </div>
-                <div class="comment__reply">
-                    <i class="uil uil-corner-up-left-alt comment-icon"></i>
-                    Phản hồi
-                </div>
-            </div>
-            <div class="comment__text">
-                <span class="comment__reply-to"></span>
-                <span class="comment__text-body">
-                    Ấn tượng! Mặc dù có vẻ như tính năng kéo có thể được cải thiện. 
-                    Nhưng nhìn chung nó có vẻ đáng kinh ngạc. Bạn đã hoàn thành tốt 
-                    thiết kế và khả năng phản hồi ở nhiều điểm dừng khác nhau hoạt 
-                    động thực sự tốt.
-                </span>
-            </div>
-            <div class="comment__replies">
-                <div class="comment__user">
-                    <img src="~/img/no_user.jpg" alt="" class="comment__user-img">
-                    <p class="comment__username">Công Đặng</p>
-                    <p class="comment__at">2 tuần trước</p>
-                </div>
-                <div class="comment__controls">
-                    <div class="comment__reply">
-                        <i class="uil uil-corner-up-left-alt comment__icon"></i>
-                        Xoá
+                    <div class="rate__star">
+                        <div class="rate__star-4-icon">
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon-blur"></i>
+                        </div>
+                        <div class="rate__num-4-percent">
+                            <div class="rate__bar">
+                                <span class="rate__percent-box"></span>
+                            </div>
+                            <div class="rate__percent-count">226</div>
+                        </div>
                     </div>
-                    <div class="comment__reply">
-                        <i class="uil uil-corner-up-left-alt comment__icon"></i>
-                        Chỉnh sửa
+                    <div class="rate__star">
+                        <div class="rate__star-3-icon">
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon-blur"></i>
+                            <i class="uis uis-star rate__icon-blur"></i>
+                        </div>
+                        <div class="rate__num-3-percent">
+                            <div class="rate__bar">
+                                <span class="rate__percent-box"></span>
+                            </div>
+                            <div class="rate__percent-count">226</div>
+                        </div>
                     </div>
-                    <div class="comment__reply">
-                        <i class="uil uil-corner-up-left-alt comment-icon"></i>
-                        Phản hồi
+                    <div class="rate__star">
+                        <div class="rate__star-2-icon">
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon-blur"></i>
+                            <i class="uis uis-star rate__icon-blur"></i>
+                            <i class="uis uis-star rate__icon-blur"></i>
+                        </div>
+                        <div class="rate__num-2-percent">
+                            <div class="rate__bar">
+                                <span class="rate__percent-box"></span>
+                            </div>
+                            <div class="rate__percent-count">226</div>
+                        </div>
+                    </div>
+                    <div class="rate__star">
+                        <div class="rate__star-1-icon">
+                            <i class="uis uis-star rate__icon"></i>
+                            <i class="uis uis-star rate__icon-blur"></i>
+                            <i class="uis uis-star rate__icon-blur"></i>
+                            <i class="uis uis-star rate__icon-blur"></i>
+                            <i class="uis uis-star rate__icon-blur"></i>
+                        </div>
+                        <div class="rate__num-1-percent">
+                            <div class="rate__bar">
+                                <span class="rate__percent-box"></span>
+                            </div>
+                            <div class="rate__percent-count">226</div>
+                        </div>
                     </div>
                 </div>
-                <div class="comment__text">
-                    <span class="comment__reply-to"></span>
-                    <span class="comment__text-body">
-                        Ấn tượng! Mặc dù có vẻ như tính năng kéo có thể được cải thiện.
-                        Nhưng nhìn chung nó có vẻ đáng kinh ngạc. Bạn đã hoàn thành tốt
-                        thiết kế và khả năng phản hồi ở nhiều điểm dừng khác nhau hoạt
-                        động thực sự tốt.
-                    </span>
+                <div class="rate__me">
+                    <div class="rate__me-title">Đánh giá của bạn</div>
+                    <div class="rate__me-stars">
+                        <i class="uis uis-star"></i>
+                        <i class="uis uis-star"></i>
+                        <i class="uis uis-star"></i>
+                        <i class="uis uis-star"></i>
+                        <i class="uis uis-star"></i>
+                    </div>
+                    <button class="btn btn--primary btn-evaluate">Gửi đánh giá</button>
                 </div>
             </div>
-        </div>
-        <div class="comment__section">
+            <div class="comment__body">
+                <div class="comment__container">
+                    <div class="comment__user">
+                        <img src="~/img/profile_avatar.jpg" alt="" class="comment__user-img">
+                        <p class="comment__username">Công Đặng</p>
+                        <p class="comment__at">2 tuần trước</p>
+                    </div>
+                    <div class="comment__controls">
+                        <div class="comment__reply">
+                            <i class="uil uil-corner-up-left-alt comment__icon"></i>
+                            Phản hồi
+                        </div>
+                    </div>
+                    <div class="comment__text">
+                        <span class="comment__reply-to"></span>
+                        <span class="comment__text-body">
+                            Ấn tượng! Mặc dù có vẻ như tính năng kéo có thể được cải thiện.
+                            Nhưng nhìn chung nó có vẻ đáng kinh ngạc. Bạn đã hoàn thành tốt
+                            thiết kế và khả năng phản hồi ở nhiều điểm dừng khác nhau hoạt
+                            động thực sự tốt.
+                        </span>
+                    </div>
+                </div>
+                <div class="comment__replies">
+                    <div class="comment__container">
+                        <div class="comment__user">
+                            <img src="~/img/profile_avatar.jpg" alt="" class="comment__user-img">
+                            <p class="comment__username">Công Đặng</p>
+                            <p class="comment__at">2 tuần trước</p>
+                        </div>
+                        <div class="comment__controls">
+                            <div class="comment__reply">
+                                <i class="uil uil-corner-up-left-alt comment__icon"></i>
+                                Phản hồi
+                            </div>
+                        </div>
+                        <div class="comment__text">
+                            <span class="comment__reply-to"></span>
+                            <span class="comment__text-body">
+                                <span class="comment__reply-to"> CôngĐặng</span> Ấn tượng! Mặc dù có vẻ như tính năng
+                                kéo có thể được cải thiện.
+                                Nhưng nhìn chung nó có vẻ đáng kinh ngạc. Bạn đã hoàn thành tốt
+                                thiết kế và khả năng phản hồi ở nhiều điểm dừng khác nhau hoạt
+                                động thực sự tốt.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="comment__replies">
+                        <div class="comment__container">
+                            <div class="comment__user">
+                                <img src="~/img/profile_avatar.jpg" alt="" class="comment__user-img">
+                                <p class="comment__username">Công Đặng</p>
+                                <p class="comment__at">2 tuần trước</p>
+                            </div>
+                            <div class="comment__controls">
+                                <div class="comment__delete">
+                                    <i class="uil uil-trash comment__icon"></i>
+                                    Xoá
+                                </div>
+                                <div class="comment__edit">
+                                    <i class="uil-edit comment__icon"></i>
+                                    Chỉnh sửa
+                                </div>
+                            </div>
+                            <div class="comment__text">
+                                <span class="comment__reply-to"></span>
+                                <span class="comment__text-body">
+                                    <span class="comment__reply-to">CôngĐặng</span> Ấn tượng! Mặc dù có vẻ như tính
+                                    năng kéo có thể được cải thiện.
+                                    Nhưng nhìn chung nó có vẻ đáng kinh ngạc. Bạn đã hoàn thành tốt
+                                    thiết kế và khả năng phản hồi ở nhiều điểm dừng khác nhau hoạt
+                                    động thực sự tốt.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment__container">
+                        <div class="comment__user">
+                            <img src="~/img/profile_avatar.jpg" alt="" class="comment__user-img">
+                            <p class="comment__username">Công Đặng</p>
+                            <p class="comment__at">2 tuần trước</p>
+                        </div>
+                        <div class="comment__controls">
+                            <div class="comment__delete">
+                                <i class="uil uil-trash comment__icon"></i>
+                                Xoá
+                            </div>
+                            <div class="comment__edit">
+                                <i class="uil-edit comment__icon"></i>
+                                Chỉnh sửa
+                            </div>
+                        </div>
+                        <div class="comment__text">
+                            <span class="comment__reply-to"></span>
+                            <span class="comment__text-body">
+                                <span class="comment__reply-to">CôngĐặng</span> Ấn tượng! Mặc dù có vẻ như tính năng
+                                kéo có thể được cải thiện.
+                                Nhưng nhìn chung nó có vẻ đáng kinh ngạc. Bạn đã hoàn thành tốt
+                                thiết kế và khả năng phản hồi ở nhiều điểm dừng khác nhau hoạt
+                                động thực sự tốt.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="comment__add">
-                <img src="~/img/no_user.jpg" alt="" class="comment__add-img">
+                <img src="~/img/profile_avatar.jpg" alt="" class="comment__user-img">
                 <textarea class="comment__add-input"></textarea>
                 <button class="comment__add-btn">Gửi</button>
             </div>
-        </div> *@
+        </div>
     </div>
 </div>
 <script src="~/js/product_detail.js"></script>

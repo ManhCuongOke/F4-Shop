@@ -42,24 +42,35 @@ public class UserController : Controller {
         return RedirectToAction("Index", "Home");
     }
 
+    [Route("user/profile")]
+    public IActionResult Profile() {
+        var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
+        IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)).ToList();
+        ProductViewModel model = new ProductViewModel
+        {
+            CartDetails = cartDetails,
+            UserID = Convert.ToInt32(userID)
+        };
+        return View(model);
+    }
+
     public IActionResult Logout() {
         _accessor?.HttpContext?.Session.SetString("Username", "");
         _accessor?.HttpContext?.Session.SetInt32("UserID", 0);
         return RedirectToAction("Index", "Home");
     }
 
+    [Route("/user/register")]
     public IActionResult Register() {
         return View();
     }
 
     [HttpPost]
-    public IActionResult Register(User user) {
-        // Phải đặt enctype="multipart/form-data" thì IFromFile mới có giá trị
-        SqlParameter roleIdParam = new SqlParameter("@FK_iRoleID", 1);
-        SqlParameter nameParam = new SqlParameter("@sName", user.sName);
-        SqlParameter emailParam = new SqlParameter("@sEmail", user.sEmail);
-        SqlParameter passwordParam = new SqlParameter("@sPassword", user.sPassword);
-        _context.Database.ExecuteSqlRaw("EXEC sp_InsertUser @FK_iRoleID, @sName, @sEmail, @sPassword", roleIdParam, nameParam, emailParam, passwordParam);
+    public IActionResult Register(UserViewModel user) {
+        if (!ModelState.IsValid) {
+            return View(user);
+        }
+        _userResponsitory.register(user);
         ViewData["msg"] = "Tạo tài khoản thành công!";
         return RedirectToAction("Register");
     }

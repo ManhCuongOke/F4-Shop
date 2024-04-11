@@ -6,6 +6,7 @@ namespace Project.Models
     public class User
     {
         public int PK_iUserID { get; set; }
+        [Required(ErrorMessage = "Bạn chưa nhập tên!")]
         public string sName { get; set; }
         [NotMapped]
         public string sAddress { get; set; }

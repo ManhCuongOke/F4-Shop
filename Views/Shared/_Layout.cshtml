@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <!--=============== ICONSCOUT ===============-->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/solid.css" />
 </head>
 @inject IHttpContextAccessor accesser
+@model ProductViewModel
 <body>
     <div class="app">
         <header class="header">
@@ -106,12 +108,10 @@
                                         class="header__navbar-icon fa-regular fa-circle-question"></i></a> Trợ giúp</a>
                         </li>
                         <li id=""
-                            class="header__navbar-item header__navbar-item--strong header__navbar-item--separate js-enter-form"><a class="header__navbar-item-link" href="/User/Register">Đăng ký</a></li>
-                        @* <li id="" class="header__navbar-item header__navbar-item--strong js-login-form">Đăng nhập</li> *@
+                            class="header__navbar-item header__navbar-item--strong header__navbar-item--separate js-enter-form"><a class="header__navbar-item-link" href="/user/register">Đăng ký</a></li>
                         @if (@accesser?.HttpContext?.Session.GetString("UserName") == null)
                         {
-                            <li class="header__navbar-item header__navbar-item--strong js-login-form" ><a class="header__navbar-item-link" href="/User/Login">Đăng nhập</a></li>
-                            @* onclick="openLoginModal()" *@
+                            <li class="header__navbar-item header__navbar-item--strong" ><a class="header__navbar-item-link" href="/User/Login">Đăng nhập</a></li>
                         }
                         else
                         {
@@ -120,7 +120,7 @@
                                 <span class="header__navbar-user-name">@accesser?.HttpContext?.Session.GetString("UserName")</span>
                                 <ul class="header__navbar-user-menu">
                                     <li class="header__navbar-user-item">
-                                        <a href="">Tài khoản của tôi</a>
+                                        <a href="/user/profile">Tài khoản của tôi</a>
                                     </li>
                                     <li class="header__navbar-user-item">
                                         <a href="">Địa chỉ của tôi</a>
@@ -148,7 +148,7 @@
                         <i class="header__mobile-search-icon fa-solid fa-magnifying-glass"></i>
                     </label> *@
                     <div class="header__logo hide-on-table">
-                        <a href="/Home/Index" class="header__logo-link">
+                        <a href="/" class="header__logo-link">
                             <span class="header__logo-icon ">F4 SHOP</span>
                         </a>
                     </div>
@@ -192,7 +192,7 @@
                     </div>
                     <!--Cart layout-->
                     <div class="header__cart">
-                        <a href="/Cart/Index" class="header__cart-wrap">
+                        <a href="/cart" class="header__cart-wrap">
                             <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
                             @if (@accesser?.HttpContext?.Session.GetInt32("CartCount") == null)
                             {
@@ -263,11 +263,7 @@
                 </li>
             </ul>
         </header>
-        <div class="container">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
+        @RenderBody()
         <footer class="footer">
             <div class="grid wide footer__content">
                 <div class="row">
