@@ -25,20 +25,20 @@
                     <tbody>
                         @foreach (var cart in Model.CartDetails) {
                             <tr id="product__@cart.PK_iProductID">
-                                <td>
+                                <td data-label="Chọn">
                                     <input type="checkbox" class="cart__checkout-input" name="" id="">
                                 </td>
-                                <td><p class="cart__product-name">@cart.sProductName</p></td>
-                                <td><img src="~/img/@cart.sImageUrl" /></td>
-                                <td>@cart.dUnitPrice đ</td>
-                                <td>
+                                <td data-label="Tên sản phẩm"><p class="cart__product-name">@cart.sProductName</p></td>
+                                <td data-label="Ảnh"><img src="~/img/@cart.sImageUrl" /></td>
+                                <td data-label="Đơn giá">@cart.dUnitPrice đ</td>
+                                <td data-label="Số lượng">
                                     <div class="cart__count-btns">
                                         <button type="button" class="cart__btn-add" onclick="tru(event, @cart.PK_iProductID, @cart.dUnitPrice)">-</button>
                                         <input name="qnt" type="text" id="qnt" value="@cart.iQuantity" class="cart__count-input" />
                                         <button type="button" class="cart__btn-sub" onclick="cong(event, @cart.PK_iProductID, @cart.dUnitPrice)">+</button>
                                     </div>
                                 </td>
-                                <td id="money">@cart.dMoney đ</td>
+                                <td data-label="Thành tiền" id="money">@cart.dMoney đ</td>
                                 <td>
                                     <div class='btn-tools'>
                                         <a class='btn-tool btn-tool__del' href='javascript:deleteProduct(@cart.PK_iProductID)' title='Xoá sản phẩm'><i class='uil uil-trash'></i></a>
@@ -53,12 +53,17 @@
                         <input type="checkbox" onchange="checkout()" class="cart__checkout-input" name="" id="">
                         <label for="" class="cart__checkout-label">Chọn tất cả</label>
                     </div>
-                    <p class='table__total-price'>Tổng tiền: 1.000.000 đ</p>
+                    <p class='table__total-price'>Tổng tiền: 0 đ</p>
                     <a class="cart__order-btn" href="">Mua hàng</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<!--Modal layoyt-->
+<div class="cart__message">
+
 </div>
 
 <script src="~/js/cart.js"></script>

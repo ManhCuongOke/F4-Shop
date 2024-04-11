@@ -28,6 +28,7 @@ public class ProductResponsitory : IProductResponsitory {
 
     public IEnumerable<Product> getProductsByCategoryIDAndSortReduce(int categoryID)
     {
-        throw new NotImplementedException();
+        SqlParameter categoryIDParam = new SqlParameter("@FK_iCategoryID", categoryID);
+        return _context.Products.FromSqlRaw("sp_SelectProductsByCategoryIDAndSortReduce @FK_iCategoryID", categoryIDParam); // Đúng tên thủ tục lưu sắp xếp giảm dần
     }
 }

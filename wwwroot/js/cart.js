@@ -33,7 +33,7 @@ function cong(event, productID, unitPrice) {
                 const money = JSON.parse(xhr.responseText);
                 const trParent = parentElement.parentNode.parentNode;
                 // console.log(money.money);
-                trParent.querySelector("#money").innerText = money.money;
+                trParent.querySelector("#money").innerText = `${money.money} đ`;
             }
         }
         xhr.send(formData);
@@ -78,7 +78,8 @@ function deleteProduct(productID) {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 const msg = JSON.parse(xhr.responseText);
                 document.getElementById("product__" + productID).style.display = 'none';
-                alert(`${msg.msg}`);
+                // alert(`${msg.msg}`);
+                toast({title: "Thông báo", msg: `${msg.msg}`, type: "success", duration: 5000});
             } 
         };
         xhr.send(formData);

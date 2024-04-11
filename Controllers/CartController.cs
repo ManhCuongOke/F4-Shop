@@ -8,13 +8,16 @@ public class CartController : Controller {
     private readonly IHttpContextAccessor _accessor;
     private readonly DatabaseContext _context;
     private readonly ICartReponsitory _cartResponsitory;
-    public CartController(IHttpContextAccessor accessor, DatabaseContext context, ICartReponsitory cartReponsitoty)
+    private readonly IUserResponsitory _userResponsitory;
+    public CartController(IHttpContextAccessor accessor, DatabaseContext context, ICartReponsitory cartReponsitoty, IUserResponsitory userResponsitory)
     {
         _accessor = accessor;
         _context = context;
         _cartResponsitory = cartReponsitoty;
+        _userResponsitory = userResponsitory;
     }
 
+    [Route("cart")]
     public IActionResult Index() {
         var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");  
         IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)); 
@@ -39,7 +42,7 @@ public class CartController : Controller {
             sessionUserID = 0;
         } 
         SqlParameter userIDParam = new SqlParameter("@PK_iUserID", sessionUserID);
-        List<User> user = _context.Users.FromSqlRaw("EXEC sp_CheckUserLogin @PK_iUserID", userIDParam).ToList();
+        List<User> user = _userResponsitory.checkUserLogin(Convert.ToInt32(sessionUserID)).ToList();
 
         List<CartDetail> checkProduct = _cartResponsitory.checkProduct(Convert.ToInt32(sessionUserID), productID).ToList();
 
@@ -94,9 +97,7 @@ public class CartController : Controller {
     }
 
     public IActionResult DeleteProduct(int productID) {
-        SqlParameter userIDParam = new SqlParameter("@PK_iUserID", _accessor?.HttpContext?.Session.GetInt32("UserID"));
-        SqlParameter productIDParam = new SqlParameter("@PK_iProductID", productID);
-        _context.Database.ExecuteSqlRaw("sp_DeleteProductInCart @PK_iUserID, @PK_iProductID", userIDParam, productIDParam);
+        _cartResponsitory.deleteProductInCart(productID, Convert.ToInt32(_accessor?.HttpContext?.Session.GetInt32("UserID")));
         string msg = "Sản phẩm đã được xoá khỏi giỏ hàng!";
         return Ok(new {msg});
     }

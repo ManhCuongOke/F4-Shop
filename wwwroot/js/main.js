@@ -33,6 +33,30 @@ function sliderAuto() {
 
 setInterval(sliderAuto, 3000)
 
+// Next/Prev Banner
+const btnNextBanner = document.querySelector(".banner-left-content__top-btn-icon-next");
+const btnPrevBanner = document.querySelector(".banner-left-content__top-btn-icon-prev");
+
+btnNextBanner.addEventListener('click', () => {
+    index = index + 1;
+    if (index > sliderNumber.length - 1) {
+        index = 0;
+    }
+    document.querySelector(".banner-left-content__top").style.right = index * 100 + "%";
+    document.querySelector(".banner-circle-fill").classList.remove("banner-circle-fill");
+    document.getElementById(index).classList.add("banner-circle-fill");
+});
+
+btnPrevBanner.addEventListener('click', () => {
+    index = index - 1;
+    if (index <= 0) {
+        index = sliderNumber.length - 1;
+        document.querySelector(".banner-left-content__top").style.right = index * 100 + "%";
+        document.querySelector(".banner-circle-fill").classList.remove("banner-circle-fill");
+        document.getElementById(index).classList.add("banner-circle-fill");
+    }
+});
+
 // Slider Category
 const btnRightTwo = document.querySelector(".fa-arrow-right");
 const btnLeftTwo = document.querySelector(".fa-arrow-left");

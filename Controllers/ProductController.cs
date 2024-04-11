@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Project.Models;
 
+[Route("/product")]
 public class ProductController : Controller {
     private readonly DatabaseContext _context;
     private readonly IProductResponsitory _productResponsitory;
@@ -15,6 +16,8 @@ public class ProductController : Controller {
         _accessor = accessor;
         _homeresponsitory = homeResponsitory;
     }
+
+    [Route("index/{categoryID}")]
     public IActionResult Index(int categoryID) {
         var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
         IEnumerable<Product> products = _productResponsitory.getProductsByCategoryID(categoryID).ToList();
@@ -30,7 +33,10 @@ public class ProductController : Controller {
         return View(model);
     }
 
-    [Route("/Product/Detail/{id?}")]
+    /// <summary>
+    /// Nguồn: https://xuanthulab.net/asp-net-core-mvc-chi-tiet-ve-route-trong-asp-net-mvc.html
+    /// </summary>
+    [Route("detail/{id?}")]
     public IActionResult Detail(int id)
     {
         var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
@@ -47,9 +53,9 @@ public class ProductController : Controller {
         IEnumerable<Product> products;
         var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
         if (sortType == "asc") {
-            products = _productResponsitory.getProductsByCategoryIDAndSortIncre(categoryID); // Gọi đúng phương thức sắp xếp nhé
+            products = _productResponsitory.getProductsByCategoryIDAndSortIncre(categoryID); // Gọi đúng phương thức sắp xếp tăng dần nhé
         } else {
-            products = _productResponsitory.getProductsByCategoryIDAndSortIncre(categoryID); // Gọi đúng phương thức sắp xếp nhé
+            products = _productResponsitory.getProductsByCategoryIDAndSortReduce(categoryID); // Gọi đúng phương thức sắp xếp giảm dần nhé
         }
         IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(userID));
         IEnumerable<Category> categories = _homeresponsitory.getCategories();
@@ -59,6 +65,7 @@ public class ProductController : Controller {
             Categories = categories,
             CurrentCategoryID = categoryID
         };
+        //return Json(model);
         return View("Index", model);
     }
 

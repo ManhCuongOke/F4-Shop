@@ -180,3 +180,22 @@
         padding: 6px 8px;
     }
 }
+
+@media screen and (min-width: 992px) {
+    
+    .comment__add {
+        grid-template-areas: "avatar input button";
+        grid-template-columns: min-content auto min-content;
+        gap: 1rem;
+    }
+
+    .rate {
+        grid-template-columns: max-content max-content;
+        column-gap: 2rem;
+        justify-content: center;
+    }
+
+    .rate__me {
+        margin: 0 auto;
+    }
+}
