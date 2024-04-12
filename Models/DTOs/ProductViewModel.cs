@@ -11,4 +11,5 @@ public class ProductViewModel {
     public int CurrentPage { get; set; }
     public int PageSize { get; set; }
     public int CurrentCategoryID { get; set; }
+    public int CartCount { get; set; }
 }

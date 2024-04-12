@@ -23,7 +23,7 @@ public class UserResponsitory : IUserResponsitory
         return _context.Users.FromSqlRaw("EXEC sp_LoginEmailAndPassword @sEmail, @sPassword", emailParam, passwordParam);
     }
 
-    public bool register(UserViewModel user)
+    public bool register(RegistrastionModel user)
     {
         // Phải đặt enctype="multipart/form-data" thì IFromFile mới có giá trị
         SqlParameter roleIdParam = new SqlParameter("@FK_iRoleID", 1);

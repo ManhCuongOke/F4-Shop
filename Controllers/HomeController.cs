@@ -50,6 +50,32 @@ namespace Project.Controllers
         }
 
         [HttpPost]
+        public IActionResult GetData(int currentPage = 1) {
+            // Fix cứng dữ liệu
+             _accessor?.HttpContext?.Session.SetString("UserName", "Công Đặng");
+            _accessor?.HttpContext?.Session.SetInt32("UserID", 1);
+            var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
+
+            IEnumerable<Product> products = _homeResponsitory.getProducts().ToList();
+            int totalRecord = products.Count();
+            int pageSize = 12;
+            int totalPage = (int) Math.Ceiling(totalRecord / (double) pageSize);
+            products = products.Skip((currentPage - 1) * pageSize).Take(pageSize);
+            IEnumerable<Category> categories = _homeResponsitory.getCategories().ToList();
+            IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)).ToList();
+            ProductViewModel model = new ProductViewModel {
+                Products = products,
+                Categories = categories,
+                CartDetails = cartDetails,
+                TotalPage = totalPage,
+                PageSize = pageSize,
+                CurrentPage = currentPage,
+                UserID = Convert.ToInt32(userID)
+            };
+            return Ok(model);
+        }
+
+        [HttpPost]
         public IActionResult Search(string keyword = "") {
             IEnumerable<Category> products = _homeResponsitory.searchProductsByKeyword(keyword).ToList();
             return Ok(products);

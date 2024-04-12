@@ -21,8 +21,11 @@ public class CartController : Controller {
     public IActionResult Index() {
         var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");  
         IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)); 
+        // Lấy số lượng giỏ hàng
+        int cartCount = carts.Count();
         ProductViewModel model = new ProductViewModel {
-            CartDetails = carts
+            CartDetails = carts,
+            CartCount = cartCount
         };
         return View(model); 
     }
