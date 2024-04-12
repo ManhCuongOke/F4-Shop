@@ -1,8 +1,10 @@
 using System.Reflection.Metadata;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Project.Models;
+
 
 public class UserController : Controller {
     private readonly DatabaseContext _context;
@@ -22,9 +24,9 @@ public class UserController : Controller {
     }
 
     [HttpPost]
-    public IActionResult Login(User user) {
-        if (ModelState.IsValid) {
-
+    public IActionResult Login(LoginModel user) {
+        if (!ModelState.IsValid) {
+            return View(user);
         }
         List<User> userLogin = _userResponsitory.login(user.sEmail, user.sPassword).ToList();
         string nameUser = userLogin[0].sName;
@@ -42,7 +44,6 @@ public class UserController : Controller {
         return RedirectToAction("Index", "Home");
     }
 
-    [Route("user/profile")]
     public IActionResult Profile() {
         var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
         IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)).ToList();
@@ -60,13 +61,12 @@ public class UserController : Controller {
         return RedirectToAction("Index", "Home");
     }
 
-    [Route("/user/register")]
     public IActionResult Register() {
         return View();
     }
 
     [HttpPost]
-    public IActionResult Register(UserViewModel user) {
+    public IActionResult Register(RegistrastionModel user) {
         if (!ModelState.IsValid) {
             return View(user);
         }

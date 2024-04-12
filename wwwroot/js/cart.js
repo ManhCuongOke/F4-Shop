@@ -1,16 +1,51 @@
 // lấy số lượng sản phẩm giỏ hàng
+window.onload = () => {
+    getCartInfo();
+}
+
 function getCartInfo() {
     var xhr = new XMLHttpRequest();
     xhr.open('post', '/Cart/GetCartInfo', true);
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
             const data = JSON.parse(xhr.responseText);
-            console.table(data);
+            console.log(data);
+            let html = "";
+            html += data.map((obj, index) => `
+            <tr id="product__${obj.pK_iProductID}">
+                <td data-label="Chọn">
+                    <input type="checkbox" class="cart__checkout-input" name="" id="" />
+                </td>
+                <td data-label="Tên sản phẩm">
+                    <p class="cart__product-name">${obj.sProductName}</p>
+                </td>
+                <td data-label="Ảnh"><img src="/img/${obj.sImageUrl}" /></td>
+                <td data-label="Đơn giá">${obj.dUnitPrice} đ</td>
+                <td data-label="Số lượng">
+                    <div class="cart__count-btns">
+                        <button type="button" class="cart__btn-add"
+                            onclick="tru(event, ${obj.pK_iProductID}, ${obj.dUnitPrice})">-</button>
+                        <input name="qnt" type="text" id="qnt" value="${obj.iQuantity}"
+                            class="cart__count-input" />
+                        <button type="button" class="cart__btn-sub"
+                            onclick="cong(event, ${obj.pK_iProductID}, ${obj.dUnitPrice})">+</button>
+                    </div>
+                </td>
+                <td data-label="Thành tiền" id="money">${obj.dMoney} đ</td>
+                <td>
+                    <div class='btn-tools'>
+                        <a class='btn-tool btn-tool__del'
+                            href='javascript:deleteProduct(@cart.PK_iProductID)' title='Xoá sản phẩm'><i
+                                class='uil uil-trash'></i></a>
+                    </div>
+                </td>
+            </tr>
+            `).join('');
+            document.getElementById("table__body").innerHTML = html;
         }
     }
     xhr.send(null);
 }
-//getCartInfo();
 
 // Tăng số lượng sản phẩm trong giỏ hàng
 function cong(event, productID, unitPrice) {
