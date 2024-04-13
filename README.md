@@ -20,15 +20,28 @@
 - Nơi tương tác với các dữ liệu của thực thể
 - Được sử dụng để lấy dữ liệu và tương tác với dữ liệu của table (create, read, update, delete)
 
-## Viết thủ tục lưu trong CSDL
+### Viết thủ tục lưu trong CSDL
   - Thủ tục được viết trên Server và khi truy vấn ta chỉ cần gọi thủ tục đó
-## Quy tắc đặt tên trong CSDL
+### Quy tắc đặt tên trong CSDL
  - Tên Database: db_ (Ví dụ: db_F4_Shop)
  - Tên bảng: tbl_ (Ví dụ tbl_Categories)
  - Tên thủ tục: sp_ (Ví dụL sp_GetCategories)
  - ...
 ## Công việc của từng Dev
 Chi tiết tại: https://docs.google.com/document/d/1OA526wTnw-2Jn4faBllxIqHbD78u58EU/edit?usp=drive_link&ouid=102969611045986692309&rtpof=true&sd=true
+## Kết quả thực hiện
+## Trang chủ
+![image](https://github.com/DangVanCong2301/F4-Shop/assets/111124018/1ff96831-615d-4aa8-8ba7-b230ca7ab001)
+## Chi tiết sản phẩm
+![image](https://github.com/DangVanCong2301/F4-Shop/assets/111124018/1dc1ab47-6c82-4cf9-96b6-4e30309d8e08)
+## Bình luận, đánh giá sản phẩm
+![image](https://github.com/DangVanCong2301/F4-Shop/assets/111124018/92aafd63-a34e-4092-a23b-f2e344673e9f)
+## Giỏ hàng
+![image](https://github.com/DangVanCong2301/F4-Shop/assets/111124018/77acbdb4-d53b-466f-8021-1203338ed907)
+
+
+
+
 
 
 
