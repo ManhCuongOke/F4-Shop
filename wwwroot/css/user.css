@@ -128,12 +128,17 @@ a.header_logo-link {
     color: var(--primary-color);
 }
 
-    .auth-form__input:focus {
-        border-color: #888;
-    }
+.auth-form__input:focus {
+    border-color: #888;
+}
 
 .auth-form__aside {
-    margin-top: 18px;
+    margin: 18px 0;
+}
+
+.auth-form__result {
+    font-size: var(--normal-font-size);
+    color: var(--primary-color);
 }
 
 .auth-form__policy-text {
@@ -149,7 +154,7 @@ a.header_logo-link {
 }
 
 .auth-form__controls {
-    margin-top: 80px;
+    margin-top: 40px;
     display: flex;
     justify-content: flex-end;
 }

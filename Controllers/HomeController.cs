@@ -37,6 +37,8 @@ namespace Project.Controllers
             products = products.Skip((currentPage - 1) * pageSize).Take(pageSize);
             IEnumerable<Category> categories = _homeResponsitory.getCategories().ToList();
             IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)).ToList();
+            IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(userID));
+            int cartCount = carts.Count();
             ProductViewModel model = new ProductViewModel {
                 Products = products,
                 Categories = categories,
@@ -44,7 +46,8 @@ namespace Project.Controllers
                 TotalPage = totalPage,
                 PageSize = pageSize,
                 CurrentPage = currentPage,
-                UserID = Convert.ToInt32(userID)
+                UserID = Convert.ToInt32(userID),
+                CartCount = cartCount
             };
             return View(model);
         }
@@ -63,6 +66,8 @@ namespace Project.Controllers
             products = products.Skip((currentPage - 1) * pageSize).Take(pageSize);
             IEnumerable<Category> categories = _homeResponsitory.getCategories().ToList();
             IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)).ToList();
+            IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(userID));
+            int cartCount = carts.Count();
             ProductViewModel model = new ProductViewModel {
                 Products = products,
                 Categories = categories,
@@ -70,7 +75,8 @@ namespace Project.Controllers
                 TotalPage = totalPage,
                 PageSize = pageSize,
                 CurrentPage = currentPage,
-                UserID = Convert.ToInt32(userID)
+                UserID = Convert.ToInt32(userID),
+                CartCount = cartCount
             };
             return Ok(model);
         }

@@ -2,6 +2,51 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+// Lây dữ liệu
+window.onload = () => {
+    getData();
+};
+
+function getData() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('post', '/Home/GetData', true);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            const data = JSON.parse(xhr.responseText);
+
+            let htmlCartDetail = "";
+
+            htmlCartDetail += data.cartDetails.map(obj => `
+            <li class="header__cart-item">
+                <div class="header__cart-item-img">
+                    <img src="/img/${obj.sImageUrl}" class="header__cart-item-img" alt="">
+                </div>
+                <div class="header__cart-item-info">
+                    <div class="header__cart-item-head">
+                        <h5 class="header__cart-item-name">${obj.sProductName}</h5>
+                        <div class="header__cart-item-price-wrap">
+                            <span class="header__cart-item-price">${obj.dUnitPrice} đ</span>
+                            <span class="header__cart-item-multifly">X</span>
+                            <span class="header__cart-item-qnt">${obj.iQuantity}</span>
+                        </div>
+                    </div>
+                    <div class="header__cart-item-body">
+                        <span class="header__cart-item-description">
+                            Phân loại hàng:Bạc
+                        </span>
+                        <span class="header__cart-item-remove">Xoá</span>
+                    </div>
+                </div>
+            </li>
+            `).join('');
+
+            document.querySelector(".header__cart-notice").innerText = data.cartCount;
+            document.querySelector(".header__cart-list-item").innerHTML = htmlCartDetail;
+        }
+    }
+    xhr.send(null);
+}
+
 // Tìm kiếm danh mục
 function searchProducts(input) {
     document.querySelector('.header__search-history').style.display = 'block';
