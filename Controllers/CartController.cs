@@ -82,8 +82,15 @@ public class CartController : Controller {
             SqlParameter discountParam = new SqlParameter("@dDiscount", 1);
             SqlParameter moneyParam = new SqlParameter("@dMonney", unitPrice * quantity);
             _context.Database.ExecuteSqlRaw("sp_InsertProductIntoCartDetail @PK_iUserID, @PK_iProductID, @PK_iCartID, @iQuantity, @dUnitPrice, @dDiscount, @dMonney", userIDParam, productIDParam, cartIDParam, quantityParam, unitPriceParam, discountParam, moneyParam);
+            IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(sessionUserID));
+            IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(sessionUserID)).ToList();
+            int cartCount = carts.Count();
+            ProductViewModel model = new ProductViewModel {
+                CartCount = cartCount,
+                CartDetails = cartDetails
+            };
             string msg = "Thêm vào giỏ hàng thành công!";
-            return Json(new { msg });
+            return Json(new { msg, model });
         }
     }
 

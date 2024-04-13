@@ -1,8 +1,4 @@
-// lấy số lượng sản phẩm giỏ hàng
-window.onload = () => {
-    getCartInfo();
-}
-
+// lấy số lượng sản phẩm giỏ hàng, khi khai báo window.onload ở site.js thì ở file này ta không khai báo nữa
 function getCartInfo() {
     var xhr = new XMLHttpRequest();
     xhr.open('post', '/Cart/GetCartInfo', true);
@@ -46,6 +42,7 @@ function getCartInfo() {
     }
     xhr.send(null);
 }
+getCartInfo();
 
 // Tăng số lượng sản phẩm trong giỏ hàng
 function cong(event, productID, unitPrice) {

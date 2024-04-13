@@ -465,7 +465,7 @@
 }
 
 .auth-form__controls {
-    margin-top: 80px;
+    margin-top: 40px;
     display: flex;
     column-gap: 1rem;
     justify-content: flex-end;

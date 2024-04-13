@@ -88,7 +88,7 @@
                                     </li>
                                     <li class="header__notify-item header__notify-item--viewed ">
                                         <a href="" class="header__notify-link">
-                                            <div class="header__notify-img"><img src="~/img/tai_nghe_eport.png" alt=""
+                                            <div class="header__notify-img"><img src="~/img/tai_nghe_eport.jpg" alt=""
                                                     class=""></div>
                                             <div class="header__notify-info">
                                                 <span class="header__notify-name">Mỹ phẩm chính 0thui hãng</span>
@@ -177,14 +177,7 @@
                     <div class="header__cart">
                         <a href="/cart" class="header__cart-wrap">
                             <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
-                            @if (@accesser?.HttpContext?.Session.GetInt32("CartCount") == null)
-                            {
-                                <span class="header__cart-notice">0</span>
-                            }
-                            else
-                            {
-                                <span class="header__cart-notice">@accesser?.HttpContext?.Session.GetInt32("CartCount")</span>
-                            }
+                            <span class="header__cart-notice">0</span>
                             <!--No cart: header__cart-list--no-cart-->
                             @if (@accesser?.HttpContext?.Session.GetInt32("UserID") == 0) {
                                 <div class="header__cart-list header__cart-list--no-cart">

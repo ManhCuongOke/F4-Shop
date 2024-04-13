@@ -31,9 +31,38 @@ function addToCart(productID, price) {
         xhr.open('post', '/Cart/AddToCart', true);
         xhr.onreadystatechange = () => {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                const obj = JSON.parse(xhr.responseText);
-                toast({title: "Thông báo", msg: `${obj.msg}`, type: "success", duration: 5000});
-                //alert(obj.msg);
+                const data = JSON.parse(xhr.responseText);
+                console.log(data);
+
+                let htmlCartDetail = "";
+
+                htmlCartDetail += data.model.cartDetails.map(obj => `
+                <li class="header__cart-item">
+                    <div class="header__cart-item-img">
+                        <img src="/img/${obj.sImageUrl}" class="header__cart-item-img" alt="">
+                    </div>
+                    <div class="header__cart-item-info">
+                        <div class="header__cart-item-head">
+                            <h5 class="header__cart-item-name">${obj.sProductName}</h5>
+                            <div class="header__cart-item-price-wrap">
+                                <span class="header__cart-item-price">${obj.dUnitPrice} đ</span>
+                                <span class="header__cart-item-multifly">X</span>
+                                <span class="header__cart-item-qnt">${obj.iQuantity}</span>
+                            </div>
+                        </div>
+                        <div class="header__cart-item-body">
+                            <span class="header__cart-item-description">
+                                Phân loại hàng:Bạc
+                            </span>
+                            <span class="header__cart-item-remove">Xoá</span>
+                        </div>
+                    </div>
+                </li>
+                `).join('');
+
+                document.querySelector(".header__cart-notice").innerText = data.model.cartCount;
+                document.querySelector(".header__cart-list-item").innerHTML = htmlCartDetail;
+                toast({title: "Thông báo", msg: `${data.msg}`, type: "success", duration: 5000});
             }
         }
         xhr.send(formData);

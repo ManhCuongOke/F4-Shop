@@ -65,13 +65,22 @@ public class UserController : Controller {
         return View();
     }
 
+    /// <summary>
+    /// Tương tự ViewData và ViewBag, TempData cũng dùng để truyền dữ liệu ra view. 
+    /// Tuy nhiên sẽ hơi khác một chút, đó là TempData sẽ tồn tại cho đến khi nó được đọc. 
+    /// Tức là ViewBag và ViewData chỉ hiển thị được dữ liệu ngay tại trang người dùng truy cập, 
+    /// còn TempData có thể lưu lại và hiển thị ở một trang sau đó và nó chỉ biến mất khi người dùng đã "đọc" nó.
+    /// Nguồn: https://techmaster.vn/posts/34556/cach-su-dung-tempdata-trong-aspnet-core-mvc
+    /// </summary>
+
     [HttpPost]
     public IActionResult Register(RegistrastionModel user) {
+        System.Console.WriteLine("Password Confirm: " + user.sPasswordConfirm);
         if (!ModelState.IsValid) {
             return View(user);
         }
         _userResponsitory.register(user);
-        ViewData["msg"] = "Tạo tài khoản thành công!";
+        TempData["msg"] = "Đăng ký tài khoản thành công!";
         return RedirectToAction("Register");
     }
 }
