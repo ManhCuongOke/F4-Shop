@@ -31,7 +31,7 @@ function getCartInfo() {
                 <td>
                     <div class='btn-tools'>
                         <a class='btn-tool btn-tool__del'
-                            href='javascript:deleteProduct(@cart.PK_iProductID)' title='Xoá sản phẩm'><i
+                            href='javascript:deleteProduct(${obj.pK_iProductID})' title='Xoá sản phẩm'><i
                                 class='uil uil-trash'></i></a>
                     </div>
                 </td>
@@ -93,29 +93,54 @@ function tru(event, productID, unitPrice) {
             }
         };
         xhr.send(formData);
-    } else if ((parseInt(tru) == 0)) {
-        if (confirm("Bạn muốn xoá sản phẩm này khỏi giỏ hàng")) {
-
-        }
+    } else {
+        deleteProduct();
     }
 }
 
+function exitModal() {
+    document.querySelector(".modal").classList.remove("open");
+}
+
+function deleteProductModal(productID) {
+    var formData = new FormData();
+    formData.append('productID', productID);
+    var xhr = new XMLHttpRequest();
+    xhr.open('post', '/Cart/DeleteProduct', true);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            const msg = JSON.parse(xhr.responseText);
+            document.querySelector(".modal").classList.remove("open");
+            document.getElementById("product__" + productID).style.display = 'none';
+            toast({ title: "Thông báo", msg: `${msg.msg}`, type: "success", duration: 5000 });
+        }
+    };
+    xhr.send(formData);
+}
+
 function deleteProduct(productID) {
-    if (confirm("Bạn có chắc muốn xoá sản phẩm này khỏi giỏ hàng?")) {
-        var formData = new FormData();
-        formData.append('productID', productID);
-        var xhr = new XMLHttpRequest();
-        xhr.open('post', '/Cart/DeleteProduct', true);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                const msg = JSON.parse(xhr.responseText);
-                document.getElementById("product__" + productID).style.display = 'none';
-                // alert(`${msg.msg}`);
-                toast({title: "Thông báo", msg: `${msg.msg}`, type: "success", duration: 5000});
-            } 
-        };
-        xhr.send(formData);
-    }
+    let html = "";
+    html += `
+        <div class="modal">
+            <div class="modal__overlay">
+    
+            </div>
+            <div class="modal__body">
+                <!--Form message -->
+                <div class="auth-form">
+                    <div class="auth-form__container">
+                        <p class="auth-form__msg">Bạn muốn xoá mặt hàng này khỏi giỏ?</p>
+                        <div class="auth-form__controls">
+                            <button onclick="exitModal()" class="btn btn--primary">HUỶ</button>
+                            <button class="btn" onclick="deleteProductModal(${productID})">ĐỒNG Ý</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    document.querySelector(".cart__message").innerHTML = html;
+    document.querySelector(".modal").classList.add("open");
 }
 
 // Checkout
