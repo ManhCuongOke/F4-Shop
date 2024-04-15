@@ -1,6 +1,6 @@
 @{
     Layout = "_UserLayout";
-    ViewData["Title"] = "Đăng nhập";
+    ViewData["Title"] = "Quên mật khẩu";
 }
 @model LoginModel
 <!--Login form-->
@@ -11,7 +11,7 @@
 
             </div>
             <div class="auth-form">
-                <form action="/User/Login" method="post" class="auth-form__container">
+                <form action="/user/forgot" method="post" class="auth-form__container">
                     <div class="auth-form__header">
                         <h3 class="auth-form__heading">@ViewData["Title"]</h3>
                         @* <span class="auth-form__switch-btn"><i class="fa-solid fa-xmark auth-form__close"></i></span> *@
@@ -21,22 +21,24 @@
                             <input type="text" id="" asp-for="sEmail" class="auth-form__input" placeholder="Email của bạn" />
                             <span asp-validation-for="sEmail" class="auth-msg auth-msg__err"></span>
                         </div>
-                        <div class="auth-form__group">
-                            <input type="password" asp-for="sPassword" id="" class="auth-form__input" placeholder="Mật khẩu của bạn" />
-                            <span asp-validation-for="sPassword" class="auth-msg auth-msg__err"></span>
-                        </div>
                     </div>
                     <div class="auth-form__aside">
                         <div class="auth-form__help">
-                            <a href="/user/forgot" class="auth-form__help-link auth-form__help-link">Quên mật khẩu</a>
+                            <a href="" class="auth-form__help-link auth-form__help-link">Đổi mật khẩu</a>
                             <span class="auth-form__help-separate"></span>
                             <a href="" class="auth-form__help-link">Cần trợ giúp</a>
                         </div>
                     </div>
+                    <div class="auth-form__result">
+                        @if (TempData["result"] != null) {
+                            @TempData["result"]
+                        }
+                        </div>
                     <div class="auth-form__controls">
-                        <button id="" class="btn auth-form__controls-back btn--normal js-login-form-close">TRỞ
-                            LẠI</button>
-                        <button type="submit" class="btn btn--primary">ĐĂNG NHẬP</button>
+                        <a href="/user/login" class="btn auth-form__controls-back btn--normal">TRỞ LẠI</a>
+                        @if (TempData["result"] == null) {
+                            <button type="submit" class="btn btn--primary btn__recover-pass">LẤY LẠI MẬT KHẨU</button>
+                        }
                     </div>
                 </form>
                 <div class="auth-form__socials">
