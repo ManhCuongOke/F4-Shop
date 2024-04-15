@@ -42,11 +42,11 @@
                                 if (category.PK_iCategoryID == Model.CurrentCategoryID) {
                                     @* Vì sản phẩm chọn ra tất cả mã danh mục giống nhau nên ta so sánh được *@
                                     <li class="category-item category-item--active">
-                                        <a href="#" class="category-item__link">@category.sCategoryName</a>
+                                        <a href="/product/index/@category.PK_iCategoryID" class="category-item__link">@category.sCategoryName</a>
                                     </li>
                                 } else {
                                     <li class="category-item">
-                                        <a href="#" class="category-item__link">@category.sCategoryName</a>
+                                        <a href="/product/index/@category.PK_iCategoryID" class="category-item__link">@category.sCategoryName</a>
                                     </li>
                                 }
                             }
@@ -69,10 +69,10 @@
                             <!--List options-->
                             <ul class="select-input__list">
                                 <li class="select-input__item">
-                                    <a href="/Product/Sort?categoryID=@Model.CurrentCategoryID&sortType=asc" class="select-input__link">Giá: Thấp đến cao</a>
+                                    <a href="/product/sort/@Model.CurrentCategoryID/asc" class="select-input__link">Giá: Thấp đến cao</a>
                                 </li>
                                 <li class="select-input__item">
-                                    <a href="/Product/Sort?categoryID=@Model.CurrentCategoryID&sortType=desc" class="select-input__link">Giá: Cao đến thấp</a>
+                                    <a href="/product/sort/@Model.CurrentCategoryID/desc" class="select-input__link">Giá: Cao đến thấp</a>
                                 </li>
                             </ul>
                         </div>

@@ -8,19 +8,27 @@ public class ProductController : Controller {
     private readonly IHttpContextAccessor _accessor;
     private readonly ICartReponsitory _cartResponsitory;
     private readonly IHomeResponsitory _homeresponsitory;
-    public ProductController(DatabaseContext context, IProductResponsitory productResponsitory, ICartReponsitory cartReponsitoty, IHttpContextAccessor accessor, IHomeResponsitory homeResponsitory)
+    private readonly IUserResponsitory _userResponsitory;
+    public ProductController(DatabaseContext context, IProductResponsitory productResponsitory, ICartReponsitory cartReponsitoty, IHttpContextAccessor accessor, IHomeResponsitory homeResponsitory, IUserResponsitory userResponsitory)
     {
         _context = context;
         _productResponsitory = productResponsitory;
         _cartResponsitory = cartReponsitoty;
         _accessor = accessor;
         _homeresponsitory = homeResponsitory;
+        _userResponsitory = userResponsitory;
     }
 
     [Route("index/{categoryID}")]
     public IActionResult Index(int categoryID) {
+        IEnumerable<Product> products;
         var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
-        IEnumerable<Product> products = _productResponsitory.getProductsByCategoryID(categoryID).ToList();
+        List<User> users = _userResponsitory.checkUserLogin(Convert.ToInt32(userID)).ToList();
+        if (users[0].FK_iRoleID == 2) {
+            products = _productResponsitory.getProductsByCategoryIDIfRoleAdmin(categoryID).ToList();
+        } else {
+            products = _productResponsitory.getProductsByCategoryID(categoryID).ToList();
+        }
         IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)).ToList();
         IEnumerable<Category> categories = _homeresponsitory.getCategories().ToList();
         // Vì mình lấy layout của _Layout của kiểu là @model ProducdViewModel nó sẽ chung cho tất cả các trang, ta lấy riêng nó sẽ lỗi
@@ -49,6 +57,7 @@ public class ProductController : Controller {
         return View(model);
     }
 
+    [Route("sort/{categoryID?}/{sortType?}")]
     public IActionResult Sort(int categoryID, string sortType = "") {
         IEnumerable<Product> products;
         var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
