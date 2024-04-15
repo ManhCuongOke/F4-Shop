@@ -31,4 +31,10 @@ public class ProductResponsitory : IProductResponsitory {
         SqlParameter categoryIDParam = new SqlParameter("@FK_iCategoryID", categoryID);
         return _context.Products.FromSqlRaw("sp_SelectProductsByCategoryIDAndSortReduce @FK_iCategoryID", categoryIDParam); // Đúng tên thủ tục lưu sắp xếp giảm dần
     }
+
+    public IEnumerable<Product> getProductsByCategoryIDIfRoleAdmin(int categoryID)
+    {
+        SqlParameter categoryIDParam = new SqlParameter("@FK_iCategoryID", categoryID);
+        return _context.Products.FromSqlRaw("sp_SelectProductsByCategoryIDIfRoleAdmin @FK_iCategoryID", categoryIDParam);
+    }
 }

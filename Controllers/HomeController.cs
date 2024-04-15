@@ -27,7 +27,7 @@ namespace Project.Controllers
         {
             // Fix cứng dữ liệu
              _accessor?.HttpContext?.Session.SetString("UserName", "Công Đặng");
-            _accessor?.HttpContext?.Session.SetInt32("UserID", 1);
+            _accessor?.HttpContext?.Session.SetInt32("UserID", 10);
             var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
 
             IEnumerable<Product> products = _homeResponsitory.getProducts().ToList();
@@ -56,7 +56,7 @@ namespace Project.Controllers
         public IActionResult GetData(int currentPage = 1) {
             // Fix cứng dữ liệu
              _accessor?.HttpContext?.Session.SetString("UserName", "Công Đặng");
-            _accessor?.HttpContext?.Session.SetInt32("UserID", 1);
+            _accessor?.HttpContext?.Session.SetInt32("UserID", 10);
             var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
 
             IEnumerable<Product> products = _homeResponsitory.getProducts().ToList();

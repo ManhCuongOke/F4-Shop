@@ -9,7 +9,6 @@ public class Product {
      public double dPrice { get; set; }
     public int iQuantity { get; set; }
     public string sProductDescription { get; set; }
-    [NotMapped]
     public int iIsVisible { get; set; }
     [NotMapped]
     public DateTime dCreateTime {get; set;}
