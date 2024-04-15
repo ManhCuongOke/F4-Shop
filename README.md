@@ -31,7 +31,9 @@
 Chi tiết tại: https://docs.google.com/document/d/1OA526wTnw-2Jn4faBllxIqHbD78u58EU/edit?usp=drive_link&ouid=102969611045986692309&rtpof=true&sd=true
 ## Kết quả thực hiện
 ### Trang chủ
-![image](https://github.com/DangVanCong2301/F4-Shop/assets/111124018/1ff96831-615d-4aa8-8ba7-b230ca7ab001)
+![image](https://github.com/DangVanCong2301/F4-Shop/assets/111124018/0a5c5d59-3f51-43f7-bb47-2b222c0a2932)
+### Trang sản phẩm
+![image](https://github.com/DangVanCong2301/F4-Shop/assets/111124018/9126d19c-cc46-49c9-87cf-ac0b98ab04c6)
 ### Chi tiết sản phẩm
 ![image](https://github.com/DangVanCong2301/F4-Shop/assets/111124018/1dc1ab47-6c82-4cf9-96b6-4e30309d8e08)
 ### Bình luận, đánh giá sản phẩm
