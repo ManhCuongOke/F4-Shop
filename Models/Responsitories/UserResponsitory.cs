@@ -1,6 +1,8 @@
+using System.Text;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Project.Models;
+using System.Security.Cryptography;
 
 public class UserResponsitory : IUserResponsitory
 {
@@ -14,6 +16,35 @@ public class UserResponsitory : IUserResponsitory
     {
         SqlParameter userIDParam = new SqlParameter("@PK_iUserID", userID);
         return _context.Users.FromSqlRaw("EXEC sp_CheckUserLogin @PK_iUserID", userIDParam).ToList();
+    }
+
+    // Phương thức giải mã
+    public string decrypt(string encrypted)
+    {
+        string hash = "cong@gmail.com";
+        byte[] data = Convert.FromBase64String(encrypted);
+        MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+        TripleDESCryptoServiceProvider tripDES = new TripleDESCryptoServiceProvider();
+        tripDES.Key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
+        tripDES.Mode = CipherMode.ECB;
+        ICryptoTransform transform = tripDES.CreateDecryptor();
+        byte[] result = transform.TransformFinalBlock(data, 0, data.Length);
+        return UTF8Encoding.UTF8.GetString(result);
+    }
+
+    // Phương thức mã hoá
+    public string encrypt(string decryted)
+    {
+        string hash = "cong@gmail.com";
+        byte[] data = UTF8Encoding.UTF8.GetBytes(decryted);
+        MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+        TripleDESCryptoServiceProvider tripDES = new TripleDESCryptoServiceProvider();
+        tripDES.Key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
+        tripDES.Mode = CipherMode.ECB;
+        ICryptoTransform transform = tripDES.CreateEncryptor();
+        byte[] result = transform.TransformFinalBlock(data, 0, data.Length);
+
+        return Convert.ToBase64String(result);
     }
 
     public IEnumerable<User> login(string email, string password)

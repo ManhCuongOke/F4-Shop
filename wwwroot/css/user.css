@@ -161,6 +161,7 @@ a.header_logo-link {
 
 .auth-form__controls-back {
     margin-right: 8px;
+    background-color: buttonface;
 }
 
 .auth-form__socials {
@@ -181,6 +182,10 @@ a.header_logo-link {
 
 .btn.btn--size-color {
     color: var(--white-color);
+}
+
+.btn__recover-pass {
+    min-width: 180px;
 }
 
 .auth-form__socials--facebook .auth-form__socials-icon {

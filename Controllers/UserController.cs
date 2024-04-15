@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Project.Models;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 
 public class UserController : Controller {
@@ -20,6 +21,11 @@ public class UserController : Controller {
     }
 
     public IActionResult Login() {
+        string password = "12345678";
+        string encrypted = _userResponsitory.encrypt(password);
+        string decryted = _userResponsitory.decrypt(encrypted);
+        System.Console.WriteLine("Mat khau ma hoa: " + encrypted);
+        System.Console.WriteLine("Mat khau giai ma: " + decryted);
         return View();
     }
 
@@ -42,6 +48,18 @@ public class UserController : Controller {
 
         // return Json(user);
         return RedirectToAction("Index", "Home");
+    }
+
+    [Route("/user/forgot")]
+    public IActionResult Forgot() {
+        return View();
+    }
+
+    [Route("/user/forgot")]
+    [HttpPost]
+    public IActionResult Forgot(string email) {
+        TempData["result"] = "Mật khẩu của bạn là: 12345678";
+        return RedirectToAction("Forgot");
     }
 
     public IActionResult Profile() {
