@@ -5,9 +5,11 @@ using Project.Models;
 
 public class OrderController : Controller {
     private readonly DatabaseContext _context;
-    public OrderController(DatabaseContext context)
+    private readonly IHttpContextAccessor _accessor;
+    public OrderController(DatabaseContext context, IHttpContextAccessor accessor)
     {
         _context = context;
+        _accessor = accessor;
     }
     public IActionResult Index() {
         return View();
@@ -16,7 +18,8 @@ public class OrderController : Controller {
     [HttpPost]
     public IActionResult Checkout() {
         // Fix cứng cũng phải khai báo SqlParameter
-        SqlParameter userIDParam = new SqlParameter("@PK_iUserID", 1);
+        var sessionUserID = _accessor?.HttpContext?.Session.GetInt32("UserID");
+        SqlParameter userIDParam = new SqlParameter("@PK_iUserID", Convert.ToInt32(sessionUserID));
         var totalMoney = _context.Orders.FromSqlRaw("sp_TotalMoneyProductInCart @PK_iUserID", userIDParam);
         return Json(totalMoney); 
     }
