@@ -34,7 +34,12 @@ public class CartController : Controller {
     public IActionResult GetCartInfo() {
         var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");  
         IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(userID));  
-        return Json(carts);  
+        int cartCount = carts.Count();
+        ProductViewModel model = new ProductViewModel {
+            CartDetails = carts,
+            CartCount = cartCount
+        };
+        return Json(model);  
     }
 
     [HttpPost]
@@ -75,13 +80,7 @@ public class CartController : Controller {
                 cartID = newCart[0].PK_iCartID;
             }
             // Thêm vào chi tiết giỏ hàng
-            SqlParameter productIDParam = new SqlParameter("@PK_iProductID", productID);
-            SqlParameter cartIDParam = new SqlParameter("@PK_iCartID", cartID);
-            SqlParameter quantityParam = new SqlParameter("@iQuantity", quantity);
-            SqlParameter unitPriceParam = new SqlParameter("@dUnitPrice", unitPrice);
-            SqlParameter discountParam = new SqlParameter("@dDiscount", 1);
-            SqlParameter moneyParam = new SqlParameter("@dMonney", unitPrice * quantity);
-            _context.Database.ExecuteSqlRaw("sp_InsertProductIntoCartDetail @PK_iUserID, @PK_iProductID, @PK_iCartID, @iQuantity, @dUnitPrice, @dDiscount, @dMonney", userIDParam, productIDParam, cartIDParam, quantityParam, unitPriceParam, discountParam, moneyParam);
+            _cartResponsitory.insertCartDetail(Convert.ToInt32(sessionUserID), productID, cartID, quantity, unitPrice);
             IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(sessionUserID));
             IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(sessionUserID)).ToList();
             int cartCount = carts.Count();
@@ -98,17 +97,20 @@ public class CartController : Controller {
     [HttpPost]
     public IActionResult Quantity(int productID, int quantity, double unitPrice) {
         double money = quantity * unitPrice;
-        SqlParameter userIDParam = new SqlParameter("@PK_iUserID", _accessor?.HttpContext?.Session.GetInt32("UserID"));
-        SqlParameter productIDParam = new SqlParameter("@PK_iProductID", productID);
-        SqlParameter quantityParam = new SqlParameter("@iQuantity", quantity);
-        SqlParameter moneyParam = new SqlParameter("@dMoney", money);
-        _context.Database.ExecuteSqlRaw("sp_UpdateProductQuantity @PK_iUserID, @PK_iProductID, @iQuantity, @dMoney", userIDParam, productIDParam, quantityParam, moneyParam);
+        _cartResponsitory.changeQuantity(Convert.ToInt32(_accessor?.HttpContext?.Session.GetInt32("UserID")), productID, quantity, money);
         return Json(new {money});
     }
 
+    [HttpPost]
     public IActionResult DeleteProduct(int productID) {
         _cartResponsitory.deleteProductInCart(productID, Convert.ToInt32(_accessor?.HttpContext?.Session.GetInt32("UserID")));
         string msg = "Sản phẩm đã được xoá khỏi giỏ hàng!";
-        return Ok(new {msg});
+        IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(_accessor?.HttpContext?.Session.GetInt32("UserID")));
+        int cartCount = cartDetails.Count();
+        CartViewModel model = new CartViewModel {
+            CartCount = cartCount,
+            Message = msg
+        };
+        return Ok(model);
     }
 }

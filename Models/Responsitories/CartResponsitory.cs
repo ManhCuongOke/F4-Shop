@@ -54,4 +54,14 @@ public class CartResponsitory : ICartReponsitory
         _context.Database.ExecuteSqlRaw("sp_DeleteProductInCart @PK_iUserID, @PK_iProductID", userIDParam, productIDParam);
         return true;
     }
+
+    public bool changeQuantity(int userID, int productID, int quantity, double money)
+    {
+        SqlParameter userIDParam = new SqlParameter("@PK_iUserID", userID);
+        SqlParameter productIDParam = new SqlParameter("@PK_iProductID", productID);
+        SqlParameter quantityParam = new SqlParameter("@iQuantity", quantity);
+        SqlParameter moneyParam = new SqlParameter("@dMoney", money);
+        _context.Database.ExecuteSqlRaw("sp_UpdateProductQuantity @PK_iUserID, @PK_iProductID, @iQuantity, @dMoney", userIDParam, productIDParam, quantityParam, moneyParam);
+        return true;
+    }
 }
