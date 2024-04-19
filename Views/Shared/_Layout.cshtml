@@ -109,7 +109,7 @@
                         </li>
                         <li id=""
                             class="header__navbar-item header__navbar-item--strong header__navbar-item--separate js-enter-form"><a class="header__navbar-item-link" href="/user/register">Đăng ký</a></li>
-                        @if (@accesser?.HttpContext?.Session.GetString("UserName") == null)
+                        @if (@accesser?.HttpContext?.Session.GetString("UserName") == "")
                         {
                             <li class="header__navbar-item header__navbar-item--strong" ><a class="header__navbar-item-link" href="/User/Login">Đăng nhập</a></li>
                         }

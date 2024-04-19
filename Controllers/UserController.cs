@@ -36,15 +36,21 @@ public class UserController : Controller {
         }
         List<User> userLogin = _userResponsitory.login(user.sEmail, user.sPassword).ToList();
         string nameUser = userLogin[0].sName;
+        int value = userLogin[0].PK_iUserID;
+        // Tạo Cookies
+        CookieOptions options = new CookieOptions {
+            Expires = DateTime.Now.AddDays(1)
+        };
+        Response.Cookies.Append("UserID", value.ToString(), options);
         _accessor?.HttpContext?.Session.SetString("UserName", nameUser);
-        _accessor?.HttpContext?.Session.SetInt32("UserID", userLogin[0].PK_iUserID);
+        //_accessor?.HttpContext?.Session.SetInt32("UserID", userLogin[0].PK_iUserID);
 
         // Lấy số lượng giỏ hàng
-        var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
-        // SqlParameter userIDParam = new SqlParameter("@PK_iUserID", userID);
-        IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(userID));
-        int cartCount = carts.Count();
-        _accessor?.HttpContext?.Session.SetInt32("CartCount", cartCount);
+        // var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
+        // var userID = Request.Cookies["UserID"];
+        // IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(userID));
+        // int cartCount = carts.Count();
+        // _accessor?.HttpContext?.Session.SetInt32("CartCount", cartCount);
 
         // return Json(user);
         return RedirectToAction("Index", "Home");

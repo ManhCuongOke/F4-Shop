@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Project.Models;
 using System.Security.Cryptography;
+using Azure;
 
 public class UserResponsitory : IUserResponsitory
 {

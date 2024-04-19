@@ -13,23 +13,25 @@ namespace Project.Controllers
         private readonly IHttpContextAccessor _accessor;
         private readonly IHomeResponsitory _homeResponsitory;
         private readonly ICartReponsitory _cartResponsitory;
+        private readonly IUserResponsitory _userResponsitory;
 
-        public HomeController(ILogger<HomeController> logger, DatabaseContext context, IHttpContextAccessor accessor, IHomeResponsitory homeResponsitory, ICartReponsitory cartReponsitory)
+        public HomeController(ILogger<HomeController> logger, DatabaseContext context, IHttpContextAccessor accessor, IHomeResponsitory homeResponsitory, ICartReponsitory cartReponsitory, IUserResponsitory userResponsitory)
         {
             _logger = logger;
             _context = context;
             _accessor = accessor;
             _homeResponsitory = homeResponsitory;
             _cartResponsitory = cartReponsitory;
+            _userResponsitory = userResponsitory;
         }
 
         public IActionResult Index(int currentPage = 1)
         {
-            // Fix cứng dữ liệu
-             _accessor?.HttpContext?.Session.SetString("UserName", "Công Đặng");
-            _accessor?.HttpContext?.Session.SetInt32("UserID", 10);
-            var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
-
+            // Lấy Cookies trên trình duyệt
+            var userID = Request.Cookies["UserID"];
+            if (userID != null) {
+                _accessor?.HttpContext?.Session.SetInt32("UserID", Convert.ToInt32(userID));
+            }
             IEnumerable<Product> products = _homeResponsitory.getProducts().ToList();
             int totalRecord = products.Count();
             int pageSize = 12;
@@ -38,6 +40,12 @@ namespace Project.Controllers
             IEnumerable<Category> categories = _homeResponsitory.getCategories().ToList();
             IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)).ToList();
             IEnumerable<CartDetail> carts = _cartResponsitory.getCartInfo(Convert.ToInt32(userID));
+            if (userID != null) {
+                List<User> users = _userResponsitory.checkUserLogin(Convert.ToInt32(userID)).ToList();
+                _accessor?.HttpContext?.Session.SetString("UserName", users[0].sName);
+            } else {
+                _accessor?.HttpContext?.Session.SetString("UserName", "");
+            }
             int cartCount = carts.Count();
             ProductViewModel model = new ProductViewModel {
                 Products = products,
@@ -54,11 +62,8 @@ namespace Project.Controllers
 
         [HttpPost]
         public IActionResult GetData(int currentPage = 1) {
-            // Fix cứng dữ liệu
-             _accessor?.HttpContext?.Session.SetString("UserName", "Công Đặng");
-            _accessor?.HttpContext?.Session.SetInt32("UserID", 10);
-            var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
-
+            // Lấy giá trị Cookies đã lưu trên trình duyệt
+            var userID = Request.Cookies["UserID"];
             IEnumerable<Product> products = _homeResponsitory.getProducts().ToList();
             int totalRecord = products.Count();
             int pageSize = 12;
