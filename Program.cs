@@ -10,6 +10,7 @@ builder.Services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(bui
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSession(opts => {
     opts.IdleTimeout = TimeSpan.FromMinutes(120);
+    opts.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 builder.Services.AddDistributedMemoryCache();
 
