@@ -61,9 +61,10 @@ public class UserResponsitory : IUserResponsitory
         SqlParameter roleIdParam = new SqlParameter("@FK_iRoleID", 1);
         SqlParameter nameParam = new SqlParameter("@sName", user.sName);
         SqlParameter emailParam = new SqlParameter("@sEmail", user.sEmail);
+        SqlParameter addressParam = new SqlParameter("@sAddress", user.sAddress);
         SqlParameter createTimeParam = new SqlParameter("@dCreateTime", DateTime.Now);
         SqlParameter passwordParam = new SqlParameter("@sPassword", user.sPassword);
-        _context.Database.ExecuteSqlRaw("EXEC sp_InsertUser @FK_iRoleID, @sName, @sEmail, @dCreateTime, @sPassword", roleIdParam, nameParam, emailParam, createTimeParam, passwordParam);
+        _context.Database.ExecuteSqlRaw("EXEC sp_InsertUser @FK_iRoleID, @sName, @sEmail, @sAddress, @dCreateTime, @sPassword", roleIdParam, nameParam, emailParam, addressParam, createTimeParam, passwordParam);
         return true;
     }
 }

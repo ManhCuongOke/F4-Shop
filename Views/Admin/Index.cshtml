@@ -1,0 +1,96 @@
+@{
+    Layout = "_UserLayout";
+    ViewData["Title"] = "Thêm thể loại";
+}
+@model Category
+<link rel="stylesheet" href="~/css/cart.css">
+<!--Register form-->
+<div class="app__container">
+    <div class="auth">
+        <div class="auth__content">
+            <div class="auth__logo">
+                <div class="cart">
+                    <div class="row">
+                        <div class="col l-4">
+                            <tr>
+                                        <th>Mã</th>
+                                        <th>Tên thể loại</th>
+                                        <th>Chi tiết</th>
+                                    </tr>
+                        </div>
+                        <div class="col l-4">
+                            <tr>
+                                        <th>Mã</th>
+                                        <th>Tên thể loại</th>
+                                        <th>Chi tiết</th>
+                                    </tr>
+                        </div>
+                        <div class="col l-4">
+                            <tr>
+                                        <th>Mã</th>
+                                        <th>Tên thể loại</th>
+                                        <th>Chi tiết</th>
+                                    </tr>
+                        </div>
+                        <div class="col l-4">
+                            <tr>
+                                        <th>Mã</th>
+                                        <th>Tên thể loại</th>
+                                        <th>Chi tiết</th>
+                                    </tr>
+
+                    </div>
+                    </div>
+                    <div class="table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Mã</th>
+                                    <th>Tên thể loại</th>
+                                    <th>Chi tiết</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table__body">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="auth-form">
+                <form action="/Admin/Index" method="post" class="auth-form__container">
+                    <div class="auth-form__header">
+                        <h3 class="auth-form__heading">Thêm thể loại</h3>
+                        @* <span class="auth-form__switch-btn"><i class="fa-solid fa-xmark auth-form__close"></i></span> *@
+                    </div>
+                    <div class="auth-form__form">
+                        <div class="auth-form__group">
+                            <input type="text" asp-for="sCategoryName" class="auth-form__input" placeholder="Tên thể loại" />
+                            <span asp-validation-for="sCategoryName" class="auth-msg auth-msg__err"></span>
+                        </div>
+                        <div class="auth-form__group">
+                            <input type="text" asp-for="sCategoryDescription" class="auth-form__input" placeholder="Chi tiết thể loại" />
+                            <span asp-validation-for="sCategoryDescription" class="auth-msg auth-msg__err"></span>
+                        </div>
+                        <div class="auth-form__group">
+                            <input type="text" asp-for="sCategoryImage" class="auth-form__input" placeholder="Chi tiết thể loại" />
+                            <span asp-validation-for="sCategoryImage" class="auth-msg auth-msg__err"></span>
+                        </div>
+                    </div>
+            
+                    <div class="auth-form__result">
+                        @if (TempData["msg"] != null) {
+                            @TempData["msg"]
+                        }
+                    </div>
+                    <div class="auth-form__controls">
+                        <button class="btn auth-form__controls-back btn--normal js-login-form-close">TRỞ LẠI</button>
+                        <button type="submit" class="btn btn--primary">THÊM</button>
+                    </div>
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/admin.js"></script>

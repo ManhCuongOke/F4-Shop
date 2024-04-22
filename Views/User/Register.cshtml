@@ -26,6 +26,10 @@
                             <span asp-validation-for="sEmail" class="auth-msg auth-msg__err"></span>
                         </div>
                         <div class="auth-form__group">
+                            <input type="text" asp-for="sAddress" class="auth-form__input" placeholder="Địa chỉ của bạn" />
+                            <span asp-validation-for="sAddress" class="auth-msg auth-msg__err"></span>
+                        </div>
+                        <div class="auth-form__group">
                             <input type="password" asp-for="sPassword"  class="auth-form__input" placeholder="Mật khẩu của bạn" />
                             <span asp-validation-for="sPassword" class="auth-msg auth-msg__err"></span>
                         </div>
@@ -66,7 +70,32 @@
                         </span>
                     </a>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
+<div class="list__user">
+
+</div>
+<script>
+    function getDataUser() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('post', '/User/GetUser', true);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            const data = JSON.parse(xhr.responseText);
+            console.table(data);
+            let html = "";
+            html += data.map((obj, index) => `
+            <h4>
+                ${obj.sAddress}
+            </h4>
+            `).join('');
+            document.querySelector('.list__user').innerHTML = html;
+        }
+    }
+    xhr.send(null);
+}
+getDataUser();
+</script>

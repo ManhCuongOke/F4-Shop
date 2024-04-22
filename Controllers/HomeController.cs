@@ -25,6 +25,23 @@ namespace Project.Controllers
             _userResponsitory = userResponsitory;
         }
 
+        /// <summary>
+        /// Điểm tích cự và hạn chế trong cách làm việc nhóm
+        /// - Tích cực:
+        ///     + Các thành viên trong nhóm có thể giúp đỡ nhau nếu, fix lỗi cho nhau nếu thành viên nào đó không fix dc lỗi 
+        ///     + Các nhánh Git của từng thành viên dev đc phân chia rõ ràng để khi ghép code tranh được các xung đột về nhánh không đáng có
+        ///     + Trưởng nhóm Dev luôn theo sát quá trình push của từng thành viên: khi có chức năng mới cần đước ghép vào nhánh chính sẽ họp (teamview) để thống nhất và gộp
+        /// - Hạn chế:
+        ///     + Các thành viên cũng chưa tích cực làm việc trên các nhánh mà mình được giao
+        ///     + Khuyết một số chức năng, hoặc để ghép chúng một cách thống nhất vẫn là một câu hỏi
+        /// - Khắc phục:
+        ///     + Các thành viên cần tích cực hơn, có trách nhiệp hơn với nhánh của mình cũng như nhiệm vụ phải hoàn thiện
+        ///     + Trưởng nhóm Dev phải là người thấu hiểu năng lực của các thành viên để phân bố công việc cho phù hợp cho từngg người
+        ///     + Có vấn đề hay gặp bug thành viên dev phải luôn đưa ra để nhóm cùng tìm cách giải quyết
+        /// </summary>
+        /// <param name="currentPage"></param>
+        /// <returns></returns>
+
         public IActionResult Index(int currentPage = 1)
         {
             // Lấy Cookies trên trình duyệt
@@ -43,10 +60,12 @@ namespace Project.Controllers
             if (userID != null) {
                 List<User> users = _userResponsitory.checkUserLogin(Convert.ToInt32(userID)).ToList();
                 _accessor?.HttpContext?.Session.SetString("UserName", users[0].sName);
+                _accessor?.HttpContext?.Session.SetInt32("RoleID", users[0].FK_iRoleID);
             } else {
                 _accessor?.HttpContext?.Session.SetString("UserName", "");
             }
             int cartCount = carts.Count();
+            System.Console.WriteLine("Role ID: " + Convert.ToInt32(_accessor?.HttpContext?.Session.GetInt32("RoleID")));
             ProductViewModel model = new ProductViewModel {
                 Products = products,
                 Categories = categories,
@@ -55,7 +74,8 @@ namespace Project.Controllers
                 PageSize = pageSize,
                 CurrentPage = currentPage,
                 UserID = Convert.ToInt32(userID),
-                CartCount = cartCount
+                CartCount = cartCount,
+                RoleID = Convert.ToInt32(_accessor?.HttpContext?.Session.GetInt32("RoleID"))
             };
             return View(model);
         }

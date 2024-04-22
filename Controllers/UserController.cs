@@ -118,4 +118,10 @@ public class UserController : Controller {
         TempData["msg"] = "Đăng ký tài khoản thành công!";
         return RedirectToAction("Register");
     }
+
+    [HttpPost]
+    public IActionResult GetUser() {
+        var users = _context.Users.FromSqlRaw("select * from tbl_Users");
+        return Ok(users);
+    }
 }
