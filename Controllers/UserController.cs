@@ -76,6 +76,7 @@ public class UserController : Controller {
         return RedirectToAction("Forgot");
     }
 
+    [Route("/user/profile")]
     public IActionResult Profile() {
         var userID = _accessor?.HttpContext?.Session.GetInt32("UserID");
         IEnumerable<CartDetail> cartDetails = _cartResponsitory.getCartInfo(Convert.ToInt32(userID)).ToList();
@@ -93,6 +94,7 @@ public class UserController : Controller {
         return RedirectToAction("Index", "Home");
     }
 
+    [Route("/user/register")]
     public IActionResult Register() {
         return View();
     }
@@ -105,11 +107,12 @@ public class UserController : Controller {
     /// Nguồn: https://techmaster.vn/posts/34556/cach-su-dung-tempdata-trong-aspnet-core-mvc
     /// </summary>
 
+    [Route("/user/register")]
     [HttpPost]
     public IActionResult Register(RegistrastionModel user) {
         System.Console.WriteLine("Password Confirm: " + user.sPasswordConfirm);
         if (!ModelState.IsValid) {
-            return View(user);
+            return View("Register", user);
         }
         _userResponsitory.register(user);
         TempData["msg"] = "Đăng ký tài khoản thành công!";
