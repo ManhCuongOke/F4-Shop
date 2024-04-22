@@ -33,6 +33,11 @@
                             <a href="" class="auth-form__help-link">Cần trợ giúp</a>
                         </div>
                     </div>
+                    <div class="auth-form__result">
+                        @if (TempData["msg"] != null) {
+                            @TempData["msg"]
+                        }
+                    </div>
                     <div class="auth-form__controls">
                         <button id="" class="btn auth-form__controls-back btn--normal js-login-form-close">TRỞ
                             LẠI</button>

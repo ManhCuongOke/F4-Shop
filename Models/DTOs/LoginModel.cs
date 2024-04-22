@@ -10,5 +10,6 @@ public class LoginModel {
     [Required(ErrorMessage = "Email không được trống!")]
     public string sEmail { get; set; }
     [Required(ErrorMessage = "Mật khẩu không được trống")]
+    //[RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[#$^+=!*()@%&]).{6,}$", ErrorMessage = "Mật khẩu phải chứa chữ hoa, chữ thường, số và ký tự")]
     public string sPassword { get; set; }
 }

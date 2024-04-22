@@ -35,13 +35,16 @@ public class UserController : Controller {
             return View(user);
         }
         List<User> userLogin = _userResponsitory.login(user.sEmail, user.sPassword).ToList();
+        if (userLogin[0] == null) {
+            TempData["msg"] = "Tài khoản hoặc mật khẩu không chính xác!";
+        }
         string nameUser = userLogin[0].sName;
         int value = userLogin[0].PK_iUserID;
         // Tạo Cookies
         CookieOptions options = new CookieOptions {
             Expires = DateTime.Now.AddDays(1),
             Secure = true, // Khi Hacker lấy cookies sẽ không thể lấy
-            HttpOnly = true,
+            HttpOnly = true,       
             SameSite = SameSiteMode.None, // Đọc thêm về SameSite (cùng trang): https://developers.google.com/search/blog/2020/01/get-ready-for-new-samesitenone-secure?hl=vi
             Path = "/",
             IsEssential = true
