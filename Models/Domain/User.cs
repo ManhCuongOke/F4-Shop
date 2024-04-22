@@ -8,7 +8,7 @@ namespace Project.Models
         public int PK_iUserID { get; set; }
         [Required(ErrorMessage = "Bạn chưa nhập tên!")]
         public string sName { get; set; }
-        [NotMapped]
+        // [NotMapped]
         public string sAddress { get; set; }
         [Required(ErrorMessage = "Bạn chưa nhập email")]
         public string sEmail { get; set; }
