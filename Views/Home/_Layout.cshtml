@@ -1,0 +1,82 @@
+﻿
+@{
+    // ViewData["Title"] = "Detail";
+}
+<style>
+    .wp-content {
+        display: flex;
+    }
+
+    .menu {
+        flex: 0 0 auto; 
+        width: 500px; 
+        background : blue;
+        text-color : black;
+
+    }
+
+    .detail {
+        flex: 1; 
+    }
+     .h1_center {
+         text-align : center;
+         background : red;
+         padding : 20px;
+     }
+     a {
+         font-size : 24px;
+         display : block;
+         margin : 10px;
+     }
+     .footer {
+        font-size: 24px;
+        display: block;
+     }
+     p{
+        margin: 20px;
+    }
+</style>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - F4 SHOP</title>
+    <link rel="stylesheet" href="~/css/styles.css">
+    <link rel="stylesheet" href="~/css/base.css">
+    <link rel="stylesheet" href="~/css/grid.css">
+    <link rel="stylesheet" href="~/css/responsives.css">
+    <!--=============== ICONSCOUT ===============-->
+    
+</head>
+
+<body>
+    <div class="header">
+        <h1 class="h1_center">
+            Mua sản phẩm có giảm giá tại F4 SHOP
+        </h1>
+    </div>
+    <div class="wp-content">
+        <div class="menu">
+            <a href="#">Thêm </a>
+            <a href="#">Sửa</a>
+            <a href="#">Xóa</a>
+            <a href="#">Xem</a>
+        </div>
+        <div class="detail">
+            @Html.Partial("~/Views/Product/Detail.cshtml")
+        </div>
+    </div>
+    <div class="footer">
+        Xây dựng website bán đồ điện tử cho cửa hàng F4 shop
+        <p>Kiều Mạnh Cường</p>
+        <p>Lê Trọng Thắng</p>
+        <p>Đào Đức Lộc</p>
+        <p>Đặng Thành Công</p>
+    </div>
+    
+    @RenderBody()
+</body>
+
+    
+
+
